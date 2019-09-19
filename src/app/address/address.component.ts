@@ -3,14 +3,16 @@ import { QuestionService } from '../question.service';
 import { QuestionBase } from '../question-base';
 import { FormGroup } from '@angular/forms';
 import { QuestionControlService } from '../question-control.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
   styleUrls: ['./address.component.css']
 })
-export class AddressComponent implements OnInit {
+export class AddressComponent implements OnInit, OnDestroy {
   questions: QuestionBase<any>[];
+  questionSubscription: Subscription;
 
   form: FormGroup;
 
@@ -22,5 +24,12 @@ export class AddressComponent implements OnInit {
   ngOnInit() {
     this.questions = this.questionService.getAddress();
     this.form = this.qcs.toFormGroup(this.questions);
+    this.questionSubscription = this.form.valueChanges.subscribe(
+      values => (this.questionService.addressAnswer = { ...values })
+    );
+  }
+
+  ngOnDestroy() {
+    this.questionSubscription.unsubscribe();
   }
 }

@@ -12,6 +12,7 @@ import { QuestionControlService } from '../question-control.service';
 })
 export class SenderComponent implements OnInit, OnDestroy {
   questions: QuestionBase<any>[];
+  questionSubscription: Subscription;
   senderTypeSubscription: Subscription;
 
   form: FormGroup;
@@ -24,6 +25,12 @@ export class SenderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.questions = this.questionService.getSender();
     this.form = this.qcs.toFormGroup(this.questions);
+
+    this.form.patchValue(this.questionService.senderAnswer);
+    this.questionSubscription = this.form.valueChanges.subscribe(
+      values => (this.questionService.senderAnswer = { ...values })
+    );
+
     const drd = this.questions.find(el => el.controlType === 'dropdown');
 
     if (this.questions.find(el => !!el.orderTo) && drd) {
@@ -51,5 +58,6 @@ export class SenderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.senderTypeSubscription.unsubscribe();
+    this.questionSubscription.unsubscribe();
   }
 }

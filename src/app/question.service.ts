@@ -7,6 +7,11 @@ import downloadingAddressQuestions from './questions/downloadingAddressQuestions
 
 @Injectable({ providedIn: 'root' })
 export class QuestionService {
+  senderAnswer = {};
+  addressAnswer = {};
+  toolsAnswer = [];
+  departureAnswer = {};
+
   getQuestions() {
     return {
       senderGroup: senderQuestions.sort((a, b) => a.order - b.order),
