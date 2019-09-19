@@ -1,0 +1,86 @@
+<main>
+  <form [formGroup]="mainForm">
+    <div formGroupName="sender">
+      <h3>Отправитель</h3>
+      <label for="senderType">Вид отправителя </label>
+      <select id="senderType" formControlName="type">
+        <option value="f">физ-лицо</option>
+        <option value="y">юр-лицо</option>
+      </select>
+      <br />
+
+      <div *ngIf="senderType === 'y'">
+        <label for="companyName">Наименование Компании </label>
+        <input
+          type="text"
+          id="companyName"
+          formControlName="companyName"
+        /><br />
+        <label for="upn">УНП </label>
+        <input type="text" id="upn" formControlName="UPN" />
+      </div>
+
+      <div *ngIf="senderType === 'f'">
+        <label for="fio">ФИО </label>
+        <input type="text" id="fio" formControlName="FIO" />
+      </div>
+
+      <label for="contactFace">Контактное лицо </label>
+      <input type="text" id="contactFace" formControlName="contactFace" />
+      <br />
+
+      <label for="contactNumber">Контактный телефон </label>
+      <input type="text" id="contactNumber" formControlName="contactNumber" />
+      <br />
+
+      <label for="email">email </label>
+      <input type="email" id="contactNumber" formControlName="email" />
+      <br />
+    </div>
+
+    <div formGroupName="downloadingAddress">
+      <h3>Адрес загрузки</h3>
+
+      <label for="settlement">Населенный пункт РБ: </label>
+      <input type="text" id="settlement" formControlName="settlement" />
+      <br />
+
+      <label for="street">Улица </label>
+      <input type="text" id="street" formControlName="street" />
+      <br />
+
+      <label for="house">Дом </label>
+      <input type="text" id="house" formControlName="house" />
+      <br />
+
+      <label for="building">Корпус </label>
+      <input type="text" id="building" formControlName="building" />
+      <br />
+
+      <label for="apartment">Квартира/офис </label>
+      <input type="text" id="apartment" formControlName="apartment" />
+      <br />
+
+      <label for="downloadingDate">Дата загрузки </label>
+      <input
+        type="date"
+        id="downloadingDate"
+        formControlName="downloadingDate"
+      />
+      <br />
+
+      <label for="downloadingDate">Дата загрузки </label>
+      <input
+        type="date"
+        id="downloadingDate"
+        formControlName="downloadingDate"
+      />
+      <br />
+    </div>
+  </form>
+  <br />
+  <hr />
+  <br />
+  <p>Валидность - {{ !mainForm.invalid }}</p>
+  <p>{{ mainForm.value | json }}</p>
+</main>
