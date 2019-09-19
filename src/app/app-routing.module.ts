@@ -1,0 +1,20 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AddressComponent } from './address/address.component';
+import { SenderComponent } from './sender/sender.component';
+import { ToolsComponent } from './tools/tools.component';
+import { DepartureComponent } from './departure/departure.component';
+
+const routes: Routes = [
+  { path: '', redirectTo: 'sender', pathMatch: 'full' },
+  { path: 'sender', component: SenderComponent },
+  { path: 'address', component: AddressComponent },
+  { path: 'tools', component: ToolsComponent },
+  { path: 'departure', component: DepartureComponent }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}

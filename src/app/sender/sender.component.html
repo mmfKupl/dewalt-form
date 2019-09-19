@@ -1,0 +1,14 @@
+<form [formGroup]="form">
+  <div *ngFor="let question of questions" class="form-row">
+    <app-question [question]="question" [form]="form"></app-question>
+  </div>
+</form>
+
+<br />
+<hr />
+<br />
+<button [disabled]="form.invalid" routerLink="/address">дальше</button>
+<br />
+<hr />
+<br />
+<p>{{ form.value | json }}</p>
