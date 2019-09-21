@@ -24,6 +24,7 @@ export class DepartureComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.questions = this.questionService.getDeparture();
     this.form = this.qcs.toFormGroup(this.questions);
+    this.form.patchValue(this.questionService.departureAnswer);
     this.questionSubscription = this.form.valueChanges.subscribe(
       values => (this.questionService.departureAnswer = { ...values })
     );

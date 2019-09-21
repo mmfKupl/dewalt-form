@@ -4,65 +4,66 @@ import { TextboxQuestion } from '../question-textbox';
 
 const senderQuestions: QuestionBase<any>[] = [
   new DropdownQuestion({
-    key: 'type',
     label: 'Тип отправителя',
     required: true,
     options: [
       { key: 'individual', value: 'Физ. лицо' },
       { key: 'entity', value: 'Юр. лицо' }
     ],
-    order: 1
+    order: 1,
+    key: 'type-sender'
   }),
 
   new TextboxQuestion({
-    key: 'FIO',
     label: 'ФИО',
     type: 'text',
     orderTo: 'individual',
     hiddenIfNotRequired: true,
-    order: 2
+    order: 2,
+    key: 'name-fio',
+    name: 'name'
   }),
 
   new TextboxQuestion({
-    key: 'companyName',
     label: 'Наименование компании',
     type: 'text',
     orderTo: 'entity',
     hiddenIfNotRequired: true,
-    order: 3
+    order: 3,
+    key: 'company-name'
   }),
 
   new TextboxQuestion({
-    key: 'UPN',
     label: 'УНП',
     type: 'text',
     orderTo: 'entity',
     hiddenIfNotRequired: true,
-    order: 4
+    order: 4,
+    key: 'sender-upn'
   }),
 
   new TextboxQuestion({
-    key: 'contactFace',
     label: 'Контактное лицо',
     type: 'text',
     required: true,
-    order: 5
+    order: 5,
+    key: 'name-contact'
   }),
 
   new TextboxQuestion({
-    key: 'contactNumber',
     label: 'Контактный номер',
-    type: 'text',
+    type: 'tel',
     required: true,
-    order: 6
+    order: 6,
+    key: 'tel-sender'
   }),
 
   new TextboxQuestion({
-    key: 'email',
     label: 'Email',
     type: 'email',
     required: true,
-    order: 7
+    order: 7,
+    key: 'email'
   })
 ];
 

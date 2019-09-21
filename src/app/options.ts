@@ -9,4 +9,5 @@ export class Options<T> {
   type?: any;
   orderTo?: string;
   hiddenIfNotRequired?: boolean;
+  name?: string;
 }

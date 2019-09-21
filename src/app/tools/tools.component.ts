@@ -49,11 +49,18 @@ export class ToolsComponent implements OnInit, OnDestroy {
 
   deleteTool() {
     const ind = this.currentFormIndex;
+    if (ind === undefined || ind === null) {
+      return;
+    }
     this.formArray.splice(ind, 1);
     this.questionSubscribtions[ind].unsubscribe();
     this.questionSubscribtions.splice(ind, 1);
     this.questionService.toolsAnswer.splice(ind, 1);
     this.currentFormIndex = this.formArray.length - 1;
+  }
+
+  onClickToTool(i: number) {
+    this.currentFormIndex = i;
   }
 
   get curForm(): FormGroup | null {
@@ -62,5 +69,10 @@ export class ToolsComponent implements OnInit, OnDestroy {
 
   get formArrayData() {
     return this.formArray.map(f => (f ? f.value : ''));
+  }
+
+  get isDisableDeleteButton() {
+    const ind = this.currentFormIndex;
+    return !(typeof ind === 'number' && ind >= 0);
   }
 }

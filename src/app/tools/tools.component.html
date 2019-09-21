@@ -1,21 +1,38 @@
-<form [formGroup]="curForm" *ngIf="curForm">
-  <div *ngFor="let question of questions">
-    <app-question [question]="question" [form]="curForm"></app-question>
-  </div>
+<form class="main__form" [formGroup]="curForm" *ngIf="curForm">
+  <app-question
+    *ngFor="let question of questions"
+    [question]="question"
+    [form]="curForm"
+  ></app-question>
 </form>
-<br />
-<hr />
-<button (click)="addNewTool()">Добавить инструмент</button><br />
-<button (click)="deleteTool()">Удалить инструмент</button><br />
-<button routerLink="/address">назад</button><br />
-<button routerLink="/departure">дальше</button>
+
+<section class="tools">
+  <button
+    class="tools__tool button"
+    (click)="onClickToTool(i)"
+    *ngFor="let tool of formArrayData; let i = index"
+    [class.button-selected]="i === currentFormIndex"
+    [class.button-invalid]="curForm.invalid"
+  >
+    {{ tool['tool-vendor-code'] || 'без артикула' }}
+  </button>
+</section>
+
+<nav class="main__nav">
+  <button
+    [disabled]="isDisableDeleteButton"
+    class="main__nav-button button"
+    (click)="deleteTool()"
+  >
+    Удалить инструмент
+  </button>
+  <button class="main__nav-button button" (click)="addNewTool()">
+    Добавить инструмент
+  </button>
+  <button class="main__nav-button button" routerLink="/address">назад</button>
+  <button class="main__nav-button button" routerLink="/departure">
+    далее
+  </button>
+</nav>
+
 <!-- [disabled]="form.invalid"  -->
-<br />
-<hr />
-<p>{{ formArrayData | json }}</p>
-<br />
-<hr />
-<br />
-<p>
-  {{ curForm && curForm.value | json }}
-</p>

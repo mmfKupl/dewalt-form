@@ -1,45 +1,45 @@
 import { QuestionBase } from '../question-base';
 import { TextboxQuestion } from '../question-textbox';
 import { TextareaQuestion } from '../question-textarea';
+import { DateQuestion } from '../question-date';
 
 const toolQuestions: QuestionBase<any>[] = [
   new TextboxQuestion({
-    key: 'article',
     label: 'Артикул',
     type: 'text',
     required: true,
-    order: 1
+    order: 1,
+    key: 'tool-vendor-code'
   }),
 
   new TextboxQuestion({
-    key: 'toolType',
     label: 'Тип инструмента',
     type: 'text',
     required: true,
-    order: 2
+    order: 2,
+    key: 'tool-type'
   }),
 
   new TextboxQuestion({
-    key: 'serialNumber',
     label: 'Серийный номер',
     type: 'number',
     required: true,
-    order: 3
+    order: 3,
+    key: 'tool-serial-number'
   }),
 
-  new TextboxQuestion({
-    key: 'saleDate',
+  new DateQuestion({
     label: 'Дата продажи',
-    type: 'date',
     required: true,
-    order: 4
+    order: 4,
+    key: 'tool-sale-date'
   }),
 
   new TextareaQuestion({
-    key: 'description',
     label: 'Описание неисправности',
     required: true,
-    order: 5
+    order: 5,
+    key: 'tool-description'
   })
 ];
 

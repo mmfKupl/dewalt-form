@@ -1,44 +1,79 @@
 <div
+  class="question"
   [formGroup]="form"
   *ngIf="
     !question.hiddenIfNotRequired ||
     (question.hiddenIfNotRequired && form.get(question.key).validator)
   "
+  [ngSwitch]="question.controlType"
 >
-  <label [attr.for]="question.key">{{ question.label }}</label>
+  <label
+    *ngIf="question.controlType !== 'checkbox'"
+    class="question__label"
+    [attr.for]="question.key"
+    >{{ question.label }}</label
+  >
 
-  <div [ngSwitch]="question.controlType">
+  <input
+    *ngSwitchCase="'textbox'"
+    class="question__answer question__input input"
+    [formControlName]="question.key"
+    [id]="question.key"
+    [type]="question.type"
+    [required]="question.required"
+    [name]="question.name || question.key"
+  />
+
+  <div *ngSwitchCase="'date'" class="question__datebox">
     <input
-      *ngSwitchCase="'textbox'"
       [formControlName]="question.key"
+      [required]="question.required"
       [id]="question.key"
-      [type]="question.type"
+      class="question__answer question__input input"
+      matInput
+      [matDatepicker]="picker"
+      [name]="question.name || question.key"
     />
-
-    <input
-      *ngSwitchCase="'checkbox'"
-      [formControlName]="question.key"
-      [id]="question.key"
-      type="checkbox"
-    />
-
-    <select
-      [id]="question.key"
-      *ngSwitchCase="'dropdown'"
-      [formControlName]="question.key"
+    <mat-datepicker #picker></mat-datepicker>
+    <button
+      class="button question__button"
+      mat-raised-button
+      (click)="picker.open()"
     >
-      <option *ngFor="let opt of question.options" [value]="opt.key">{{
-        opt.value
-      }}</option>
-    </select>
-
-    <textarea
-      *ngSwitchCase="'textarea'"
-      [formControlName]="question.key"
-      [id]="question.key"
-    ></textarea>
+      Выбарть
+    </button>
   </div>
 
-  <p *ngIf="!isValid">поле "{{ question.label | lowercase }}" обязателено</p>
-  <br />
+  <mat-checkbox
+    *ngSwitchCase="'checkbox'"
+    class="question__answer question__input question__input-checkbox"
+    [formControlName]="question.key"
+    [id]="question.key"
+    type="checkbox"
+    [required]="question.required"
+    [labelPosition]="'before'"
+  >
+    {{ question.label }}</mat-checkbox
+  >
+
+  <mat-select
+    *ngSwitchCase="'dropdown'"
+    class="question__answer question__select select"
+    [id]="question.key"
+    [formControlName]="question.key"
+    [required]="question.required"
+  >
+    <mat-option *ngFor="let opt of question.options" [value]="opt.key">{{
+      opt.value
+    }}</mat-option>
+  </mat-select>
+
+  <textarea
+    *ngSwitchCase="'textarea'"
+    class="question__answer question__textarea textarea"
+    [formControlName]="question.key"
+    [id]="question.key"
+    [required]="question.required"
+    [name]="question.name || question.key"
+  ></textarea>
 </div>

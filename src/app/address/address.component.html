@@ -1,15 +1,12 @@
-<form [formGroup]="form">
-  <div *ngFor="let question of questions">
-    <app-question [question]="question" [form]="form"></app-question>
-  </div>
+<form class="main__form" [formGroup]="form">
+  <app-question
+    *ngFor="let question of questions"
+    [question]="question"
+    [form]="form"
+  ></app-question>
 </form>
-<br />
-<hr />
-<br />
-<button routerLink="/sender">назад</button><br />
-<button routerLink="/tools">дальше</button>
+<nav class="main__nav">
+  <button class="main__nav-button button" routerLink="/sender">назад</button>
+  <button class="main__nav-button button" routerLink="/tools">далее</button>
+</nav>
 <!-- [disabled]="form.invalid" -->
-<br />
-<hr />
-<br />
-<p>{{ form.value | json }}</p>

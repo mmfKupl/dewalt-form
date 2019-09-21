@@ -12,9 +12,20 @@ export class QuestionControlService {
 
     questions.forEach(question => {
       const cond = question.value === undefined || question.value === null;
-      group[question.key] = question.required
-        ? new FormControl(cond ? '' : question.value, Validators.required)
-        : new FormControl(cond ? '' : question.value);
+      const validators = [];
+
+      if (question.required) {
+        validators.push(Validators.required);
+      }
+
+      if (question.type === 'email') {
+        validators.push(Validators.email);
+      }
+
+      group[question.key] = new FormControl(
+        cond ? '' : question.value,
+        validators
+      );
     });
     return new FormGroup(group);
   }

@@ -26,10 +26,7 @@ export class SenderComponent implements OnInit, OnDestroy {
     this.questions = this.questionService.getSender();
     this.form = this.qcs.toFormGroup(this.questions);
 
-    this.form.patchValue(this.questionService.senderAnswer);
-    this.questionSubscription = this.form.valueChanges.subscribe(
-      values => (this.questionService.senderAnswer = { ...values })
-    );
+    this.form.valueChanges.subscribe(v => console.log(v));
 
     const drd = this.questions.find(el => el.controlType === 'dropdown');
 
@@ -54,6 +51,11 @@ export class SenderComponent implements OnInit, OnDestroy {
           });
         });
     }
+
+    this.form.patchValue(this.questionService.senderAnswer);
+    this.questionSubscription = this.form.valueChanges.subscribe(
+      values => (this.questionService.senderAnswer = { ...values })
+    );
   }
 
   ngOnDestroy() {

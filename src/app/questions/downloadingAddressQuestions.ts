@@ -1,85 +1,85 @@
 import { QuestionBase } from '../question-base';
 import { TextboxQuestion } from '../question-textbox';
+import { DateQuestion } from '../question-date';
 
 const donloadingAddressQuestions: QuestionBase<any>[] = [
   new TextboxQuestion({
-    key: 'settlement',
     label: 'Населенный пункт РБ',
     type: 'text',
     required: true,
-    order: 1
+    order: 1,
+    key: 'city'
   }),
 
   new TextboxQuestion({
-    key: 'street',
     label: 'Улица',
     type: 'text',
     required: true,
-    order: 2
+    order: 2,
+    key: 'street'
   }),
 
   new TextboxQuestion({
-    key: 'house',
     label: 'Дом',
     type: 'text',
     required: true,
-    order: 3
+    order: 3,
+    key: 'house'
   }),
 
   new TextboxQuestion({
-    key: 'building',
     label: 'Корпус',
     type: 'text',
     required: true,
-    order: 4
+    order: 4,
+    key: 'house-building'
   }),
 
   new TextboxQuestion({
-    key: 'apartment',
     label: 'Квартира',
     type: 'text',
     required: true,
-    order: 5
+    order: 5,
+    key: 'house-room'
   }),
 
-  new TextboxQuestion({
-    key: 'downloadingDate',
+  new DateQuestion({
     label: 'Дата загрузки',
-    type: 'date',
     required: true,
-    order: 6
+    order: 6,
+    key: 'downloading-date'
   }),
 
   new TextboxQuestion({
-    key: 'dtFrom',
-    label: 'Время забора груза: с',
+    label: 'Время забора груза с',
     type: 'time',
     required: true,
-    order: 7
+    order: 7,
+    key: 'da-downloading-time-from'
   }),
 
   new TextboxQuestion({
-    key: 'dtDinnerFrom',
-    label: 'Время забора груза: обед: c',
+    label: 'Обед c',
     type: 'time',
     required: true,
-    order: 8
+    order: 9,
+    key: 'da-dinner-time-from'
   }),
 
   new TextboxQuestion({
-    key: 'dtDinnerTo',
-    label: 'Время забора груза: обед: до',
+    label: 'Обед до',
     type: 'time',
     required: true,
-    order: 9
+    order: 10,
+    key: 'da-dinner-time-to'
   }),
 
   new TextboxQuestion({
-    key: 'dtTo',
-    label: 'Время забора груза: до',
+    label: 'Время забора груза до',
     type: 'time',
     required: true,
-    order: 10
+    order: 8,
+    key: 'da-downloading-time-to'
   })
 ];
 

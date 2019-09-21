@@ -9,6 +9,7 @@ export class QuestionBase<T> {
   controlType: string;
   orderTo?: string;
   hiddenIfNotRequired?: boolean;
+  name?: string;
 
   constructor(options: Options<T> = {}) {
     this.value = options.value;
@@ -19,5 +20,6 @@ export class QuestionBase<T> {
     this.controlType = options.controlType || '';
     this.orderTo = options.orderTo;
     this.hiddenIfNotRequired = options.hiddenIfNotRequired;
+    this.name = options.name;
   }
 }

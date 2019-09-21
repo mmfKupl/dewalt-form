@@ -12,6 +12,15 @@ import { AddressComponent } from './address/address.component';
 import { ToolsComponent } from './tools/tools.component';
 import { DepartureComponent } from './departure/departure.component';
 
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MatNativeDateModule,
+  MatSelectModule,
+  MatInputModule,
+  MatCheckboxModule
+} from '@angular/material';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +32,18 @@ import { DepartureComponent } from './departure/departure.component';
     ToolsComponent,
     DepartureComponent
   ],
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    BrowserAnimationsModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -5,51 +5,51 @@ import { CheckboxQuestion } from '../question-checkbox';
 
 const departureQuestions: QuestionBase<any>[] = [
   new TextboxQuestion({
-    key: 'weight',
     label: 'Вес, кг',
     type: 'number',
     required: true,
-    order: 1
+    order: 1,
+    key: 'd-weight'
   }),
 
   new TextboxQuestion({
-    key: 'width',
     label: 'Ширина, см',
     type: 'number',
     required: true,
-    order: 2
+    order: 2,
+    key: 'd-width'
   }),
 
   new TextboxQuestion({
-    key: 'height',
     label: 'Высота, см',
     type: 'number',
     required: true,
-    order: 3
+    order: 3,
+    key: 'd-height'
   }),
 
   new TextboxQuestion({
-    key: 'length',
     label: 'Длинна, см',
     type: 'number',
     required: true,
-    order: 4
+    order: 4,
+    key: 'd-length'
   }),
 
   new CheckboxQuestion({
-    key: 'isAccum',
     label: 'Есть аккумулятор',
     type: 'checkbox',
     order: 5,
-    value: false
+    value: false,
+    key: 'd-is-accum'
   }),
 
   new CheckboxQuestion({
-    key: 'isCharger',
     label: 'Есть зарядное устройство',
     type: 'checkbox',
     order: 6,
-    value: false
+    value: false,
+    key: 'd-is-charger'
   })
 ];
 

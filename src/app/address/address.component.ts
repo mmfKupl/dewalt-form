@@ -24,6 +24,7 @@ export class AddressComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.questions = this.questionService.getAddress();
     this.form = this.qcs.toFormGroup(this.questions);
+    this.form.patchValue(this.questionService.addressAnswer);
     this.questionSubscription = this.form.valueChanges.subscribe(
       values => (this.questionService.addressAnswer = { ...values })
     );
