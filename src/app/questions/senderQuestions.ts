@@ -39,7 +39,8 @@ const senderQuestions: QuestionBase<any>[] = [
     orderTo: 'entity',
     hiddenIfNotRequired: true,
     order: 4,
-    key: 'sender-upn'
+    key: 'sender-upn',
+    fixedLength: 9
   }),
 
   new TextboxQuestion({
@@ -61,9 +62,15 @@ const senderQuestions: QuestionBase<any>[] = [
   new TextboxQuestion({
     label: 'Email',
     type: 'email',
-    required: true,
     order: 7,
     key: 'email'
+  }),
+
+  new TextboxQuestion({
+    label: 'Viber',
+    type: 'viber-let',
+    order: 8,
+    key: 'viber-tel'
   })
 ];
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 
 import { Options } from './options';
 
@@ -22,10 +22,14 @@ export class QuestionControlService {
         validators.push(Validators.email);
       }
 
-      group[question.key] = new FormControl(
-        cond ? '' : question.value,
-        validators
-      );
+      if (question.controlType === 'textbox-array') {
+        group[question.key] = new FormArray(question.inputs, validators);
+      } else {
+        group[question.key] = new FormControl(
+          cond ? '' : question.value,
+          validators
+        );
+      }
     });
     return new FormGroup(group);
   }

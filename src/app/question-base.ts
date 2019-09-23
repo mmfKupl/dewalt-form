@@ -10,6 +10,9 @@ export class QuestionBase<T> {
   orderTo?: string;
   hiddenIfNotRequired?: boolean;
   name?: string;
+  fixedLength?: number;
+  values?: any[];
+  inputs?: any[];
 
   constructor(options: Options<T> = {}) {
     this.value = options.value;
@@ -21,5 +24,8 @@ export class QuestionBase<T> {
     this.orderTo = options.orderTo;
     this.hiddenIfNotRequired = options.hiddenIfNotRequired;
     this.name = options.name;
+    this.fixedLength = options.fixedLength;
+    this.values = options.values;
+    this.inputs = options.inputs;
   }
 }

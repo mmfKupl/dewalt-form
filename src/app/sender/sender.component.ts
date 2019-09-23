@@ -1,9 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { QuestionService } from '../question.service';
 import { QuestionBase } from '../question-base';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { QuestionControlService } from '../question-control.service';
+
+interface OrderToElem {
+  el: AbstractControl;
+  orderTo: string;
+  fixedLength: number;
+}
 
 @Component({
   selector: 'app-sender',
@@ -26,15 +32,17 @@ export class SenderComponent implements OnInit, OnDestroy {
     this.questions = this.questionService.getSender();
     this.form = this.qcs.toFormGroup(this.questions);
 
-    this.form.valueChanges.subscribe(v => console.log(v));
-
     const drd = this.questions.find(el => el.controlType === 'dropdown');
 
     if (this.questions.find(el => !!el.orderTo) && drd) {
-      const arr = [];
+      const arr: OrderToElem[] = [];
       for (const elem of this.questions) {
         if (elem.orderTo) {
-          arr.push({ el: this.form.get(elem.key), orderTo: elem.orderTo });
+          arr.push({
+            el: this.form.get(elem.key),
+            orderTo: elem.orderTo,
+            fixedLength: elem.fixedLength
+          });
         }
       }
       this.senderTypeSubscription = this.form
@@ -42,7 +50,11 @@ export class SenderComponent implements OnInit, OnDestroy {
         .valueChanges.subscribe(value => {
           arr.forEach(el => {
             if (el.orderTo === value) {
-              el.el.setValidators(Validators.required);
+              const vs = [Validators.required];
+              if (el.fixedLength) {
+                vs.push(Validators.minLength(el.fixedLength));
+              }
+              el.el.setValidators(vs);
             } else {
               el.el.setValidators(null);
             }

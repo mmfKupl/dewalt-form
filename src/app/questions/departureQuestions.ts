@@ -34,22 +34,6 @@ const departureQuestions: QuestionBase<any>[] = [
     required: true,
     order: 4,
     key: 'd-length'
-  }),
-
-  new CheckboxQuestion({
-    label: 'Есть аккумулятор',
-    type: 'checkbox',
-    order: 5,
-    value: false,
-    key: 'd-is-accum'
-  }),
-
-  new CheckboxQuestion({
-    label: 'Есть зарядное устройство',
-    type: 'checkbox',
-    order: 6,
-    value: false,
-    key: 'd-is-charger'
   })
 ];
 

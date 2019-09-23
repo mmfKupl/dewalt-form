@@ -18,7 +18,8 @@ import {
   MatNativeDateModule,
   MatSelectModule,
   MatInputModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatRadioModule
 } from '@angular/material';
 
 @NgModule({
@@ -38,6 +39,7 @@ import {
     MatNativeDateModule,
     MatInputModule,
     MatCheckboxModule,
+    MatRadioModule,
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,

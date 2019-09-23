@@ -1,3 +1,13 @@
 <a class="header__link" routerLink="/">
   <img class="header__logo" src="../../assets/DeWALT-logo.svg" alt="logo"
 /></a>
+
+<nav class="header__nav nav">
+  <h3
+    class="header__nav-h3 header__nav-link"
+    *ngFor="let link of links"
+    [class.header__nav-h3__current]="link.path === currentNavigation"
+  >
+    <a [routerLink]="link.path" class="header__nav-link">{{ link.title }}</a>
+  </h3>
+</nav>

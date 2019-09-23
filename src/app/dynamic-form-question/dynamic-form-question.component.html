@@ -16,12 +16,14 @@
 
   <input
     *ngSwitchCase="'textbox'"
-    class="question__answer question__input input"
+    class="question__answer question__input
+  input"
     [formControlName]="question.key"
     [id]="question.key"
     [type]="question.type"
     [required]="question.required"
     [name]="question.name || question.key"
+    [maxlength]="question.fixedLength || null"
   />
 
   <div *ngSwitchCase="'date'" class="question__datebox">
@@ -44,6 +46,26 @@
     </button>
   </div>
 
+  <div
+    *ngSwitchCase="'textbox-array'"
+    [formArrayName]="question.key"
+    class="question__textbox-array"
+  >
+    <input
+      class="question__answer question__input input"
+      *ngFor="let inp of getFormArray(question.key).controls; let i = index"
+      [type]="question.type"
+      [id]="i"
+      [formControlName]="i"
+    />
+    <button
+      (click)="onFormArrayButtonClick()"
+      class="textbox-array__add-button"
+    >
+      Добавить
+    </button>
+  </div>
+
   <mat-checkbox
     *ngSwitchCase="'checkbox'"
     class="question__answer question__input question__input-checkbox"
@@ -55,6 +77,21 @@
   >
     {{ question.label }}</mat-checkbox
   >
+
+  <mat-radio-group
+    *ngSwitchCase="'radio'"
+    class="question__answer question__input-radio-group"
+    [formControlName]="question.key"
+    [id]="question.key"
+  >
+    <mat-radio-button
+      class="question__answer question__input question__input-checkbox question__input-radio"
+      *ngFor="let btn of question.values"
+      [id]="btn.key"
+      [value]="btn.key"
+      >{{ btn.label }}</mat-radio-button
+    >
+  </mat-radio-group>
 
   <mat-select
     *ngSwitchCase="'dropdown'"

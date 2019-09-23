@@ -12,16 +12,12 @@ export class QuestionService {
   toolsAnswer = [];
   departureAnswer = {};
 
-  getQuestions() {
-    return {
-      senderGroup: senderQuestions.sort((a, b) => a.order - b.order),
-      downloadingAddressGroup: downloadingAddressQuestions.sort(
-        (a, b) => a.order - b.order
-      ),
-      toolGroup: toolQuestions.sort((a, b) => a.order - b.order),
-      departureGroup: departureQuestions.sort((a, b) => a.order - b.order)
-    };
-  }
+  links = [
+    { path: '/sender', title: 'Отправитель', order: 1 },
+    { path: '/address', title: 'Адрес загрузки', order: 2 },
+    { path: '/tools', title: 'Инструменты', order: 3 },
+    { path: '/departure', title: 'Отправление', order: 4 }
+  ];
 
   getSender() {
     return senderQuestions.sort((a, b) => a.order - b.order);
@@ -30,9 +26,13 @@ export class QuestionService {
     return downloadingAddressQuestions.sort((a, b) => a.order - b.order);
   }
   getTools() {
-    return toolQuestions.sort((a, b) => a.order - b.order);
+    return [...toolQuestions.sort((a, b) => a.order - b.order)];
   }
   getDeparture() {
     return departureQuestions.sort((a, b) => a.order - b.order);
+  }
+
+  getHeaders() {
+    return this.links.sort((a, b) => a.order - b.order);
   }
 }

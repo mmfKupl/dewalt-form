@@ -10,4 +10,7 @@ export class Options<T> {
   orderTo?: string;
   hiddenIfNotRequired?: boolean;
   name?: string;
+  fixedLength?: number;
+  values?: any[];
+  inputs?: any[];
 }

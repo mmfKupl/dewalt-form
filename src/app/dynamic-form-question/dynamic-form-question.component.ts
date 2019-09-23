@@ -1,5 +1,11 @@
-import { Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  AfterViewChecked
+} from '@angular/core';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Options } from '../options';
 
 import {
@@ -29,7 +35,24 @@ import {
 export class DynamicFormQuestionComponent {
   @Input() question: Options<any>;
   @Input() form: FormGroup;
+
+  @Output() formArrayButtonClick = new EventEmitter<string>();
+
+  onFormArrayButtonClick(elem) {
+    this.formArrayButtonClick.emit('string');
+  }
+
   get isValid() {
     return this.form.controls[this.question.key].valid;
+  }
+
+  getFormArray(key: string): FormArray {
+    return this.form.get(key) as FormArray;
+  }
+
+  addNewFormControl() {
+    return this.getFormArray(this.question.key).push(
+      new FormControl('', Validators.required)
+    );
   }
 }

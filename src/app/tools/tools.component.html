@@ -1,9 +1,28 @@
 <form class="main__form" [formGroup]="curForm" *ngIf="curForm">
-  <app-question
-    *ngFor="let question of questions"
-    [question]="question"
-    [form]="curForm"
-  ></app-question>
+  <div *ngFor="let question of curQuestions">
+    <app-question
+      *ngIf="question.controlType !== 'textbox-array'; else elseBlock"
+      [question]="question"
+      [form]="curForm"
+      (formArrayButtonClick)="addNewControlToArray()"
+    ></app-question>
+    <ng-template #elseBlock>
+      <div [formArrayName]="question.key" class="question__textbox-array">
+        <input
+          class="question__answer question__input input"
+          *ngFor="let inp of curForm.get(question.key).controls; let i = index"
+          [id]="i"
+          [formControlName]="i"
+        />
+        <button
+          (click)="addNewControlToArray()"
+          class="textbox-array__add-button"
+        >
+          Добавить
+        </button>
+      </div>
+    </ng-template>
+  </div>
 </form>
 
 <section class="tools">
@@ -36,3 +55,5 @@
 </nav>
 
 <!-- [disabled]="form.invalid"  -->
+
+<p *ngFor="let el of formArray">{{ el.value | json }}</p>
