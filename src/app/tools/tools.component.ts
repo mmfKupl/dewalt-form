@@ -87,7 +87,7 @@ export class ToolsComponent implements OnInit, OnDestroy {
         }
       }
 
-      function setValidators(value, doReset: boolean = true) {
+      const setValidators = (value, doReset: boolean = true) => {
         arr.forEach(el => {
           if (el.orderTo === value) {
             el.el.setValidators(Validators.required);
@@ -109,7 +109,7 @@ export class ToolsComponent implements OnInit, OnDestroy {
           }
           el.el.markAsTouched();
         });
-      }
+      };
 
       arr.forEach(elem => {
         const curControl = this.curForm.get(elem.key);
