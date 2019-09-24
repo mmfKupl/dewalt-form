@@ -1,59 +1,51 @@
-<form class="main__form" [formGroup]="curForm" *ngIf="curForm">
-  <div *ngFor="let question of curQuestions">
+<ng-scrollbar>
+  <form
+    class="main__form main__form-no-margin-bottom"
+    [formGroup]="curForm"
+    *ngIf="curForm"
+  >
     <app-question
-      *ngIf="question.controlType !== 'textbox-array'; else elseBlock"
+      *ngFor="let question of questions"
       [question]="question"
       [form]="curForm"
-      (formArrayButtonClick)="addNewControlToArray()"
+      (formArrayButtonClick)="addNewControlToArray($event)"
+      (fileChange)="onFileChange($event)"
+      [fileName]="curFilePath"
+      [spinnerHidden]="spinnerHidden"
     ></app-question>
-    <ng-template #elseBlock>
-      <div [formArrayName]="question.key" class="question__textbox-array">
-        <input
-          class="question__answer question__input input"
-          *ngFor="let inp of curForm.get(question.key).controls; let i = index"
-          [id]="i"
-          [formControlName]="i"
-        />
-        <button
-          (click)="addNewControlToArray()"
-          class="textbox-array__add-button"
-        >
-          Добавить
-        </button>
-      </div>
-    </ng-template>
-  </div>
-</form>
-
-<section class="tools">
-  <button
-    class="tools__tool button"
-    (click)="onClickToTool(i)"
-    *ngFor="let tool of formArrayData; let i = index"
-    [class.button-selected]="i === currentFormIndex"
-    [class.button-invalid]="curForm.invalid"
-  >
-    {{ tool['tool-vendor-code'] || 'без артикула' }}
-  </button>
-</section>
-
+  </form>
+  <section class="tools" *ngIf="formArray.length">
+    <button
+      class="tools__tool button"
+      (click)="onClickToTool(i)"
+      *ngFor="let tool of formArrayData; let i = index"
+      [class.button-selected]="i === currentFormIndex"
+      [class.button-invalid]="formArray[i].invalid"
+      [class.button-valid]="formArray[i].valid"
+    >
+      {{ tool['tool-vendor-code'] || 'без артикула' }}
+    </button>
+  </section>
+</ng-scrollbar>
 <nav class="main__nav">
   <button
     [disabled]="isDisableDeleteButton"
     class="main__nav-button button"
     (click)="deleteTool()"
   >
-    Удалить инструмент
+    удалить инструмент
   </button>
   <button class="main__nav-button button" (click)="addNewTool()">
-    Добавить инструмент
+    добавить инструмент
   </button>
   <button class="main__nav-button button" routerLink="/address">назад</button>
-  <button class="main__nav-button button" routerLink="/departure">
+  <button
+    [disabled]="!isAllValid"
+    class="main__nav-button button"
+    routerLink="/departure"
+  >
     далее
   </button>
 </nav>
 
 <!-- [disabled]="form.invalid"  -->
-
-<p *ngFor="let el of formArray">{{ el.value | json }}</p>

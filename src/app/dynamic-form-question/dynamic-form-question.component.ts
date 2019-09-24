@@ -35,11 +35,22 @@ import {
 export class DynamicFormQuestionComponent {
   @Input() question: Options<any>;
   @Input() form: FormGroup;
+  @Input() fileName: string;
+  @Input() spinnerHidden: boolean;
 
   @Output() formArrayButtonClick = new EventEmitter<string>();
+  @Output() fileChange = new EventEmitter<HTMLInputElement>();
 
-  onFormArrayButtonClick(elem) {
-    this.formArrayButtonClick.emit('string');
+  onFormArrayButtonClick(action: string, i: number = -1) {
+    this.formArrayButtonClick.emit(i.toString());
+  }
+
+  onFileChange(elem: HTMLInputElement) {
+    this.fileChange.emit(elem);
+  }
+
+  getDiametr(elem: HTMLDivElement) {
+    return Math.floor(elem.clientHeight * 0.8);
   }
 
   get isValid() {

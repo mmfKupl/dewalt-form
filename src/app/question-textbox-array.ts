@@ -7,7 +7,6 @@ export class TextboxArrayQuestion extends QuestionBase<any[]> {
 
   constructor(options: Options<any[]> = {}) {
     super(options);
-    this.inputs = options.inputs || [new FormControl('', Validators.required)];
-    console.log(this.inputs);
+    this.inputs = options.inputs || [];
   }
 }

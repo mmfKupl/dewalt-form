@@ -19,8 +19,11 @@ import {
   MatSelectModule,
   MatInputModule,
   MatCheckboxModule,
-  MatRadioModule
+  MatRadioModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
+
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 @NgModule({
   declarations: [
@@ -40,11 +43,13 @@ import {
     MatInputModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatProgressSpinnerModule,
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgScrollbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

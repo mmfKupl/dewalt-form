@@ -23,7 +23,7 @@ export class QuestionControlService {
       }
 
       if (question.controlType === 'textbox-array') {
-        group[question.key] = new FormArray(question.inputs, validators);
+        group[question.key] = new FormArray([...question.inputs], validators);
       } else {
         group[question.key] = new FormControl(
           cond ? '' : question.value,

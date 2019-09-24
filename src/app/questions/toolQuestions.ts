@@ -6,6 +6,7 @@ import { DropdownQuestion } from '../question-dropdown';
 import { CheckboxQuestion } from '../question-checkbox';
 import { RadioQuestion } from '../question-radio';
 import { TextboxArrayQuestion } from '../question-textbox-array';
+import { FileQuestion } from '../question-file';
 
 const toolQuestions: QuestionBase<any>[] = [
   new DropdownQuestion({
@@ -20,69 +21,84 @@ const toolQuestions: QuestionBase<any>[] = [
     key: 'brend-type'
   }),
 
+  new FileQuestion({
+    label: 'Гарантийный талон (фото)',
+    required: true,
+    order: 0.2,
+    key: 'warranty-img'
+  }),
+
   new TextboxQuestion({
-    label: 'Артикул',
+    label: 'Артикул (торговое название инструмента)',
     type: 'text',
     required: true,
     order: 1,
     key: 'tool-vendor-code'
   }),
 
-  // new TextboxQuestion({
-  //   label: 'Тип инструмента',
-  //   type: 'text',
-  //   required: true,
-  //   order: 2,
-  //   key: 'tool-type'
-  // }),
+  new TextboxQuestion({
+    label: 'Тип инструмента (код изделия)',
+    type: 'text',
+    required: true,
+    order: 2,
+    key: 'tool-type'
+  }),
 
-  // new TextboxQuestion({
-  //   label: 'Серийный номер',
-  //   type: 'number',
-  //   required: true,
-  //   order: 3,
-  //   key: 'tool-serial-number'
-  // }),
+  new TextboxQuestion({
+    label: 'Заводской номер (серийный номер)',
+    type: 'number',
+    required: true,
+    order: 3,
+    key: 'tool-serial-number'
+  }),
 
-  // new DateQuestion({
-  //   label: 'Дата продажи',
-  //   required: true,
-  //   order: 4,
-  //   key: 'tool-sale-date'
-  // }),
+  new DateQuestion({
+    label: 'Дата продажи',
+    required: true,
+    order: 4,
+    key: 'tool-sale-date'
+  }),
 
-  // new TextareaQuestion({
-  //   label: 'Описание неисправности',
-  //   required: true,
-  //   order: 5,
-  //   key: 'tool-description'
-  // }),
+  new TextboxQuestion({
+    label: 'Продавец (название организации)',
+    type: 'text',
+    required: true,
+    order: 4.5,
+    key: 'tool-seller-name'
+  }),
 
-  // new RadioQuestion({
-  //   label: 'Тип питания',
-  //   order: 6,
-  //   required: true,
-  //   values: [
-  //     { label: 'Аккумуляторный', key: 'acum-type', value: 'acum' },
-  //     { label: 'Сетевой', key: 'new-type', value: 'net' }
-  //   ],
-  //   key: 'power-type'
-  // }),
+  new TextareaQuestion({
+    label: 'Описание неисправности',
+    required: true,
+    order: 5,
+    key: 'tool-description'
+  }),
 
-  // new TextboxQuestion({
-  //   label: 'Номер зарядного устройства',
-  //   order: 7,
-  //   orderTo: 'acum-type',
-  //   hiddenIfNotRequired: true,
-  //   key: 'number-of-charger',
-  //   type: 'text'
-  // }),
+  new RadioQuestion({
+    label: 'Тип питания',
+    order: 6,
+    required: true,
+    values: [
+      { label: 'Аккумуляторный', key: 'acum-type', value: 'acum' },
+      { label: 'Сетевой', key: 'net-type', value: 'net' }
+    ],
+    key: 'power-type'
+  }),
+
+  new TextboxQuestion({
+    label: 'Номер зарядного устройства',
+    order: 7,
+    orderTo: 'acum-type',
+    hiddenIfNotRequired: true,
+    key: 'charger-number',
+    type: 'text'
+  }),
 
   new TextboxArrayQuestion({
     label: 'Номера аккумуляторов',
     order: 8,
     orderTo: 'acum-type',
-    // hiddenIfNotRequired: true,
+    hiddenIfNotRequired: true,
     key: 'accums-numbers',
     type: 'text'
   })

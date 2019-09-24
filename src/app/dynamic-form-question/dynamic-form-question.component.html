@@ -11,8 +11,8 @@
     *ngIf="question.controlType !== 'checkbox'"
     class="question__label"
     [attr.for]="question.key"
-    >{{ question.label }}</label
-  >
+    >{{ question.label }}
+  </label>
 
   <input
     *ngSwitchCase="'textbox'"
@@ -42,25 +42,67 @@
       mat-raised-button
       (click)="picker.open()"
     >
-      Выбарть
+      выбарть
     </button>
   </div>
 
-  <div
-    *ngSwitchCase="'textbox-array'"
-    [formArrayName]="question.key"
-    class="question__textbox-array"
-  >
+  <div *ngSwitchCase="'file'" class="question__filebox" #fileContainer>
+    <div class="textbox-array__item question__filebox-box">
+      <input
+        class="question__answer question__input input file__input"
+        [value]="fileName"
+        [class.ng-invalid]="!fileName"
+        [class.ng-valid]="fileName"
+        readonly
+      />
+      <label
+        [for]="question.key"
+        class="textbox-array__item-delete button inset-shadow file__label"
+      >
+        выбрать
+      </label>
+      <div class="filebox__file-spinner-box" [class.hidden]="spinnerHidden">
+        <mat-progress-spinner
+          class="filebox__file-spinner"
+          color="accent"
+          mode="indeterminate"
+          [diameter]="getDiametr(fileContainer)"
+        ></mat-progress-spinner>
+      </div>
+    </div>
     <input
-      class="question__answer question__input input"
-      *ngFor="let inp of getFormArray(question.key).controls; let i = index"
-      [type]="question.type"
-      [id]="i"
-      [formControlName]="i"
+      [id]="question.key"
+      type="file"
+      [required]="question.required"
+      class="question__answer question__input input input-file"
+      (change)="onFileChange($event.target)"
     />
+  </div>
+
+  <div *ngSwitchCase="'textbox-array'" class="question__textbox-array">
+    <div class="textbox-array__items" [formArrayName]="question.key">
+      <label
+        class="textbox-array__item"
+        *ngFor="let inp of getFormArray(question.key).controls; let i = index"
+      >
+        <input
+          class="question__answer question__input input"
+          [type]="question.type"
+          [id]="i"
+          [formControlName]="i"
+        />
+        <button
+          class="textbox-array__item-delete button inset-shadow"
+          (click)="onFormArrayButtonClick('delete', i)"
+        >
+          удалить
+        </button>
+      </label>
+    </div>
+
     <button
-      (click)="onFormArrayButtonClick()"
-      class="textbox-array__add-button"
+      (click)="onFormArrayButtonClick('add')"
+      class="button textbox-array__add-button"
     >
       Добавить
     </button>

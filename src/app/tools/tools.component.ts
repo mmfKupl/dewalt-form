@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { QuestionService } from '../question.service';
 import { QuestionBase } from '../question-base';
 import {
@@ -20,6 +14,7 @@ import { Subscription } from 'rxjs';
 interface OrderToElem {
   el: AbstractControl;
   orderTo: string;
+  key: string;
 }
 @Component({
   selector: 'app-tools',
@@ -28,20 +23,24 @@ interface OrderToElem {
 })
 export class ToolsComponent implements OnInit, OnDestroy {
   questions: QuestionBase<any>[];
-  questionsArray: QuestionBase<any>[][] = [];
   questionSubscribtions: Subscription[] = [];
   chargerTypeSubscriptions: Subscription[] = [];
 
   formArray: FormGroup[] = [];
   currentFormIndex: number;
+  curFilePath: string;
+  curFileKey: string;
+  spinnerHidden = true;
 
   constructor(
     private questionService: QuestionService,
-    private qcs: QuestionControlService
+    private qcs: QuestionControlService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.questions = this.questionService.getTools();
+
     this.questionService.toolsAnswer.forEach(answer => {
       this.addNewTool(answer);
     });
@@ -49,48 +48,92 @@ export class ToolsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.questionSubscribtions.forEach(q => q.unsubscribe());
+    this.chargerTypeSubscriptions.forEach(q => q.unsubscribe());
   }
 
   addNewTool(answer = {}) {
-    this.questionsArray.push(this.questionService.getTools());
-    this.currentFormIndex = this.questionsArray.length - 1;
-    const newForm = this.qcs.toFormGroup(this.curQuestions);
-
+    const newForm = this.qcs.toFormGroup(this.questions);
     newForm.patchValue(answer);
+    for (const key in answer) {
+      if (answer[key] && Array.isArray(answer[key])) {
+        const arr = newForm.get(key) as FormArray;
+        arr.setValidators(Validators.required);
+        answer[key].forEach(elem => {
+          arr.push(new FormControl(elem, Validators.required));
+        });
+      }
+    }
+    this.curFilePath =
+      (answer['warranty-img'] && answer['warranty-img'].fileName) || '';
+
     this.formArray.push(newForm);
+    this.currentFormIndex = this.formArray.length - 1;
     const curInd = this.currentFormIndex;
 
-    const radio = this.curQuestions.find(el => el.controlType === 'radio');
+    const radio = this.questions.find(el => el.controlType === 'radio');
 
-    if (this.curQuestions.find(el => !!el.orderTo) && radio) {
+    if (this.questions.find(el => !!el.orderTo) && radio) {
       const arr: OrderToElem[] = [];
-      for (const elem of this.curQuestions) {
+      for (const elem of this.questions) {
         if (elem.orderTo) {
-          arr.push({
-            el: this.curForm.get(elem.key),
-            orderTo: elem.orderTo
-          });
+          const formEl = this.curForm.get(elem.key);
+          const el = {
+            el: formEl,
+            orderTo: elem.orderTo,
+            key: elem.key
+          };
+
+          arr.push(el);
         }
       }
+
+      function setValidators(value, doReset: boolean = true) {
+        arr.forEach(el => {
+          if (el.orderTo === value) {
+            el.el.setValidators(Validators.required);
+            if (el.el instanceof FormArray) {
+              el.el.controls.forEach(
+                control =>
+                  control.setValidators &&
+                  control.setValidators(Validators.required)
+              );
+            }
+          } else {
+            el.el.clearValidators();
+            if (el.el instanceof FormArray) {
+              el.el.controls.forEach(control => control.clearValidators());
+            }
+          }
+          if (doReset) {
+            el.el.reset();
+          }
+          el.el.markAsTouched();
+        });
+      }
+
+      arr.forEach(elem => {
+        const curControl = this.curForm.get(elem.key);
+        if (
+          curControl &&
+          ((Array.isArray(curControl.value) && curControl.value.length) ||
+            (!Array.isArray(curControl.value) && curControl.value)) &&
+          !curControl.validator
+        ) {
+          setValidators(elem.orderTo, false);
+        }
+      });
+
       this.chargerTypeSubscriptions[this.currentFormIndex] = this.curForm
         .get(radio.key)
         .valueChanges.subscribe(value => {
-          arr.forEach(el => {
-            if (el.orderTo === value) {
-              el.el.setValidators(Validators.required);
-            } else {
-              el.el.setValidators(null);
-            }
-            el.el.reset();
-            el.el.markAsTouched();
-          });
+          setValidators(value);
         });
     }
 
     this.questionSubscribtions.push(
-      newForm.valueChanges.subscribe(
-        values => (this.questionService.toolsAnswer[curInd] = { ...values })
-      )
+      newForm.valueChanges.subscribe(values => {
+        this.questionService.toolsAnswer[curInd] = { ...values };
+      })
     );
   }
 
@@ -103,21 +146,41 @@ export class ToolsComponent implements OnInit, OnDestroy {
     this.questionSubscribtions[ind].unsubscribe();
     this.questionSubscribtions.splice(ind, 1);
     this.questionService.toolsAnswer.splice(ind, 1);
-    this.questionsArray.splice(ind, 1);
     this.currentFormIndex = this.formArray.length - 1;
   }
 
   onClickToTool(i: number) {
     this.currentFormIndex = i;
+    this.curFilePath =
+      (this.curForm.get(this.curFileKey) &&
+        this.curForm.get(this.curFileKey).value.fileName) ||
+      '';
+  }
+
+  onFileChange(elem: HTMLInputElement) {
+    this.spinnerHidden = false;
+    if (!this.curFileKey) {
+      this.curFileKey = elem.id;
+    }
+
+    if (elem.files && elem.files.length) {
+      const file = elem.files[0];
+      this.curFilePath = file.name;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = res => {
+        this.spinnerHidden = true;
+        this.curForm
+          .get(elem.id)
+          .patchValue({ fileName: file.name, file: reader.result });
+        this.cd.markForCheck();
+      };
+    }
   }
 
   get curForm(): FormGroup | null {
-    console.warn('curForm', this.currentFormIndex);
     return this.formArray[this.currentFormIndex] || null;
-  }
-
-  get curQuestions(): QuestionBase<any>[] {
-    return this.questionsArray[this.currentFormIndex] || null;
   }
 
   get formArrayData() {
@@ -129,13 +192,30 @@ export class ToolsComponent implements OnInit, OnDestroy {
     return !(typeof ind === 'number' && ind >= 0);
   }
 
-  addNewControlToArray() {
+  get isAllValid() {
+    if (!this.formArray.length) {
+      return false;
+    }
+    for (const form of this.formArray) {
+      if (form.invalid) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  addNewControlToArray(pos: string) {
+    const posN = Number(pos);
     const cf = this.formArray[this.currentFormIndex];
     for (const key in cf.controls) {
       if (cf.controls[key] instanceof FormArray) {
-        (cf.controls[key] as FormArray).push(
-          new FormControl('', Validators.required)
-        );
+        if (posN >= 0) {
+          (cf.controls[key] as FormArray).controls.splice(posN, 1);
+        } else if (posN === -1) {
+          (cf.controls[key] as FormArray).push(
+            new FormControl('', Validators.required)
+          );
+        }
         break;
       }
     }

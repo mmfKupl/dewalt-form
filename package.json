@@ -25,6 +25,7 @@
     "angular-bootstrap-md": "^8.3.0",
     "mdbootstrap": "^4.8.10",
     "moment": "^2.24.0",
+    "ngx-scrollbar": "^6.0.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
