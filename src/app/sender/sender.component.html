@@ -8,7 +8,11 @@
   </form>
 </ng-scrollbar>
 <nav class="main__nav">
-  <button class="main__nav-button button" routerLink="/address">
+  <button
+    [class.disabled]="!isValid"
+    class="main__nav-button button"
+    routerLink="/address"
+  >
     далее
   </button>
 </nav>

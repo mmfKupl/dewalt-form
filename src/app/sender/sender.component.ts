@@ -70,6 +70,10 @@ export class SenderComponent implements OnInit, OnDestroy {
     );
   }
 
+  get isValid() {
+    return this.form.valid;
+  }
+
   ngOnDestroy() {
     this.senderTypeSubscription.unsubscribe();
     this.questionSubscription.unsubscribe();

@@ -91,10 +91,12 @@ body {
   border: 1px solid #febd1755;
   box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0), inset 0px 0px 10px 0 #febd1780;
 }
-.button:disabled:hover {
+.button:disabled:hover,
+.button.disabled:hover {
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
-.button:disabled {
+.button:disabled,
+.button.disabled {
   cursor: not-allowed;
   background-color: rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.3), inset 0px 0px 10px 0 #febd1700;
@@ -133,10 +135,12 @@ body {
 .button.inset-shadow:hover {
   box-shadow: inset 0px 0px 10px 0 #febd1780;
 }
-.button.inset-shadow:disabled:hover {
+.button.inset-shadow:disabled:hover,
+.button.inset-shadow.disabled:hover {
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
-.button.inset-shadow:disabled {
+.button.inset-shadow:disabled,
+.button.inset-shadow.disabled {
   box-shadow: inset 0px 0px 10px 0 #febd1700;
 }
 .button.inset-shadow:focus {

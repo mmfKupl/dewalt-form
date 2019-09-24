@@ -9,6 +9,12 @@
 </ng-scrollbar>
 <nav class="main__nav">
   <button class="main__nav-button button" routerLink="/sender">назад</button>
-  <button class="main__nav-button button" routerLink="/tools">далее</button>
+  <button
+    [class.disabled]="!isValid"
+    class="main__nav-button button"
+    routerLink="/tools"
+  >
+    далее
+  </button>
 </nav>
 <!-- [disabled]="form.invalid" -->

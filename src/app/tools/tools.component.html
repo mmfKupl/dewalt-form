@@ -40,12 +40,10 @@
   </button>
   <button class="main__nav-button button" routerLink="/address">назад</button>
   <button
-    [disabled]="!isAllValid"
+    [class.disabled]="!isAllValid"
     class="main__nav-button button"
     routerLink="/departure"
   >
     далее
   </button>
 </nav>
-
-<!-- [disabled]="form.invalid"  -->

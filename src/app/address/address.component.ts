@@ -30,6 +30,9 @@ export class AddressComponent implements OnInit, OnDestroy {
     );
   }
 
+  get isValid() {
+    return this.form.valid;
+  }
   ngOnDestroy() {
     this.questionSubscription.unsubscribe();
   }

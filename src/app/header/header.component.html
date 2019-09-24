@@ -8,6 +8,8 @@
     *ngFor="let link of links"
     [class.header__nav-h3__current]="link.path === currentNavigation"
   >
-    <a [routerLink]="link.path" class="header__nav-link">{{ link.title }}</a>
+    <!-- <a [routerLink]="link.path" class="header__nav-link"> -->
+    {{ link.title }}
+    <!-- </a> -->
   </h3>
 </nav>
