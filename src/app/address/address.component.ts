@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { QuestionService } from '../question.service';
-import { QuestionBase } from '../question-base';
+import { QuestionBase } from '../models/question-base';
 import { FormGroup } from '@angular/forms';
 import { QuestionControlService } from '../question-control.service';
 import { Subscription } from 'rxjs';
+import { NavButtonsService } from '../nav-buttons.service';
+import { ButtonData } from '../models/button-data';
 
 @Component({
   selector: 'app-address',
@@ -16,18 +18,46 @@ export class AddressComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
 
+  buttons: ButtonData[] = [
+    new ButtonData(
+      'далее',
+      () => {},
+      () => {
+        return this.form.invalid;
+      },
+      '/tools',
+      1,
+      true
+    ),
+    new ButtonData('назад', () => {}, false, '/sender', 2),
+    new ButtonData(
+      'очистить',
+      () => {
+        this.form.reset();
+      },
+      false,
+      '',
+      3,
+      true
+    )
+  ];
+
   constructor(
     private questionService: QuestionService,
-    private qcs: QuestionControlService
+    private qcs: QuestionControlService,
+    private nbs: NavButtonsService
   ) {}
 
   ngOnInit() {
+    this.nbs.setButtons(this.buttons);
+
     this.questions = this.questionService.getAddress();
     this.form = this.qcs.toFormGroup(this.questions);
     this.form.patchValue(this.questionService.addressAnswer);
-    this.questionSubscription = this.form.valueChanges.subscribe(
-      values => (this.questionService.addressAnswer = { ...values })
-    );
+
+    this.questionSubscription = this.form.valueChanges.subscribe(values => {
+      this.questionService.addressAnswer = { ...values };
+    });
   }
 
   get isValid() {

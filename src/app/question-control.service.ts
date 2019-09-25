@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 
-import { Options } from './options';
+import { Options } from './models/options';
 
 @Injectable({ providedIn: 'root' })
 export class QuestionControlService {
@@ -10,7 +10,13 @@ export class QuestionControlService {
   toFormGroup(questions: Options<any>[]) {
     const group: any = {};
 
-    questions.forEach(question => {
+    const add = question => {
+      if (question.controlType === 'group') {
+        question.items.forEach(item => {
+          add(item);
+        });
+        return;
+      }
       const cond = question.value === undefined || question.value === null;
       const validators = [];
 
@@ -30,6 +36,16 @@ export class QuestionControlService {
           validators
         );
       }
+    };
+
+    questions.forEach(question => {
+      if (question.controlType === 'group') {
+        question.items.forEach(item => {
+          add(item);
+        });
+        return;
+      }
+      add(question);
     });
     return new FormGroup(group);
   }

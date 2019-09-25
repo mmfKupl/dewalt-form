@@ -1,6 +1,6 @@
-import { QuestionBase } from '../question-base';
-import { DropdownQuestion } from '../question-dropdown';
-import { TextboxQuestion } from '../question-textbox';
+import { QuestionBase } from '../models/question-base';
+import { DropdownQuestion } from '../models/question-dropdown';
+import { TextboxQuestion } from '../models/question-textbox';
 
 const senderQuestions: QuestionBase<any>[] = [
   new DropdownQuestion({

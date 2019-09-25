@@ -2,8 +2,21 @@
   <app-header></app-header>
 </header>
 <main class="main">
-  <router-outlet></router-outlet>
+  <ng-scrollbar>
+    <router-outlet></router-outlet>
+  </ng-scrollbar>
 </main>
+<nav class="body__nav">
+  <button
+    class="body__nav-button button"
+    *ngFor="let button of buttons; let i = index"
+    (click)="button.onClick()"
+    [class.disabled]="getDisabled(i)"
+    [routerLink]="button.link ? button.link : null"
+  >
+    {{ button.title }}
+  </button>
+</nav>
 <footer class="footer">
   <app-footer></app-footer>
 </footer>

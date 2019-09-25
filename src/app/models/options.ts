@@ -1,3 +1,5 @@
+import { QuestionBase } from './question-base';
+
 export class Options<T> {
   value?: T;
   key?: string;
@@ -13,4 +15,5 @@ export class Options<T> {
   fixedLength?: number;
   values?: any[];
   inputs?: any[];
+  items?: QuestionBase<any>[];
 }

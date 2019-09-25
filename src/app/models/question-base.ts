@@ -13,6 +13,7 @@ export class QuestionBase<T> {
   fixedLength?: number;
   values?: any[];
   inputs?: any[];
+  items?: QuestionBase<any>[];
 
   constructor(options: Options<T> = {}) {
     this.value = options.value;
@@ -27,5 +28,6 @@ export class QuestionBase<T> {
     this.fixedLength = options.fixedLength;
     this.values = options.values;
     this.inputs = options.inputs;
+    this.items = options.items;
   }
 }

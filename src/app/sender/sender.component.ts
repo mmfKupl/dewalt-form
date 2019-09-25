@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { QuestionService } from '../question.service';
-import { QuestionBase } from '../question-base';
+import { QuestionBase } from '../models/question-base';
 import { FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { QuestionControlService } from '../question-control.service';
+import { ButtonData } from '../models/button-data';
+import { NavButtonsService } from '../nav-buttons.service';
 
 interface OrderToElem {
   el: AbstractControl;
@@ -23,12 +25,38 @@ export class SenderComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
 
+  buttons: ButtonData[] = [
+    new ButtonData(
+      'далее',
+      () => {},
+      () => {
+        return this.form.invalid;
+      },
+      '/address',
+      1,
+      true
+    ),
+    new ButtonData(
+      'очистить',
+      () => {
+        this.form.reset();
+      },
+      false,
+      '',
+      2,
+      true
+    )
+  ];
+
   constructor(
     private questionService: QuestionService,
-    private qcs: QuestionControlService
+    private qcs: QuestionControlService,
+    private nbs: NavButtonsService
   ) {}
 
   ngOnInit() {
+    this.nbs.setButtons(this.buttons);
+
     this.questions = this.questionService.getSender();
     this.form = this.qcs.toFormGroup(this.questions);
 
@@ -65,9 +93,9 @@ export class SenderComponent implements OnInit, OnDestroy {
     }
 
     this.form.patchValue(this.questionService.senderAnswer);
-    this.questionSubscription = this.form.valueChanges.subscribe(
-      values => (this.questionService.senderAnswer = { ...values })
-    );
+    this.questionSubscription = this.form.valueChanges.subscribe(values => {
+      this.questionService.senderAnswer = { ...values };
+    });
   }
 
   get isValid() {

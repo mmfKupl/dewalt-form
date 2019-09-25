@@ -1,49 +1,27 @@
-<ng-scrollbar>
-  <form
-    class="main__form main__form-no-margin-bottom"
-    [formGroup]="curForm"
-    *ngIf="curForm"
-  >
-    <app-question
-      *ngFor="let question of questions"
-      [question]="question"
-      [form]="curForm"
-      (formArrayButtonClick)="addNewControlToArray($event)"
-      (fileChange)="onFileChange($event)"
-      [fileName]="curFilePath"
-      [spinnerHidden]="spinnerHidden"
-    ></app-question>
-  </form>
-  <section class="tools" *ngIf="formArray.length">
-    <button
-      class="tools__tool button"
-      (click)="onClickToTool(i)"
-      *ngFor="let tool of formArrayData; let i = index"
-      [class.button-selected]="i === currentFormIndex"
-      [class.button-invalid]="formArray[i].invalid"
-      [class.button-valid]="formArray[i].valid"
-    >
-      {{ tool['tool-vendor-code'] || 'без артикула' }}
-    </button>
-  </section>
-</ng-scrollbar>
-<nav class="main__nav">
+<form
+  class="main__form main__form-no-margin-bottom"
+  [formGroup]="curForm"
+  *ngIf="curForm"
+>
+  <app-question
+    *ngFor="let question of questions"
+    [question]="question"
+    [form]="curForm"
+    (formArrayButtonClick)="addNewControlToArray($event)"
+    (fileChange)="onFileChange($event)"
+    [fileName]="curFilePath"
+    [spinnerHidden]="spinnerHidden"
+  ></app-question>
+</form>
+<section class="tools" *ngIf="formArray.length">
   <button
-    [disabled]="isDisableDeleteButton"
-    class="main__nav-button button"
-    (click)="deleteTool()"
+    class="tools__tool button"
+    (click)="onClickToTool(i)"
+    *ngFor="let tool of formArrayData; let i = index"
+    [class.button-selected]="i === currentFormIndex"
+    [class.button-invalid]="formArray[i].invalid"
+    [class.button-valid]="formArray[i].valid"
   >
-    удалить инструмент
+    {{ tool['tool-vendor-code'] || 'без артикула' }}
   </button>
-  <button class="main__nav-button button" (click)="addNewTool()">
-    добавить инструмент
-  </button>
-  <button class="main__nav-button button" routerLink="/address">назад</button>
-  <button
-    [class.disabled]="!isAllValid"
-    class="main__nav-button button"
-    routerLink="/departure"
-  >
-    далее
-  </button>
-</nav>
+</section>

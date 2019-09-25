@@ -8,11 +8,27 @@
   [ngSwitch]="question.controlType"
 >
   <label
-    *ngIf="question.controlType !== 'checkbox'"
+    *ngIf="
+      question.controlType !== 'checkbox' ||
+      (question.controlType !== 'group' && !question.label)
+    "
     class="question__label"
     [attr.for]="question.key"
     >{{ question.label }}
   </label>
+
+  <div *ngSwitchCase="'group'" class="question__group">
+    <app-question
+      class="group__question"
+      *ngFor="let item of question.items"
+      [question]="item"
+      [form]="form"
+      (formArrayButtonClick)="addNewFormControl($event)"
+      (fileChange)="onFileChange($event)"
+      [fileName]="fileName"
+      [spinnerHidden]="spinnerHidden"
+    ></app-question>
+  </div>
 
   <input
     *ngSwitchCase="'textbox'"
@@ -26,24 +42,27 @@
     [maxlength]="question.fixedLength || null"
   />
 
-  <div *ngSwitchCase="'date'" class="question__datebox">
+  <div
+    *ngSwitchCase="'date'"
+    class="question__datebox textbox-array__item question__filebox-box"
+  >
     <input
       [formControlName]="question.key"
       [required]="question.required"
       [id]="question.key"
-      class="question__answer question__input input"
+      class="question__answer question__input input no-border-right file__input"
       matInput
       [matDatepicker]="picker"
       [name]="question.name || question.key"
     />
-    <mat-datepicker #picker></mat-datepicker>
     <button
-      class="button question__button"
+      class="textbox-array__item-delete button inset-shadow file__label"
       mat-raised-button
       (click)="picker.open()"
     >
-      выбарть
+      выбрать
     </button>
+    <mat-datepicker #picker></mat-datepicker>
   </div>
 
   <div *ngSwitchCase="'file'" class="question__filebox" #fileContainer>
@@ -110,7 +129,7 @@
 
   <mat-checkbox
     *ngSwitchCase="'checkbox'"
-    class="question__answer question__input question__input-checkbox"
+    class="question__answer question__input question__input-checkbox question__label"
     [formControlName]="question.key"
     [id]="question.key"
     type="checkbox"

@@ -1,12 +1,13 @@
-import { QuestionBase } from '../question-base';
-import { TextboxQuestion } from '../question-textbox';
-import { TextareaQuestion } from '../question-textarea';
-import { DateQuestion } from '../question-date';
-import { DropdownQuestion } from '../question-dropdown';
-import { CheckboxQuestion } from '../question-checkbox';
-import { RadioQuestion } from '../question-radio';
-import { TextboxArrayQuestion } from '../question-textbox-array';
-import { FileQuestion } from '../question-file';
+import { QuestionBase } from '../models/question-base';
+import { TextboxQuestion } from '../models/question-textbox';
+import { TextareaQuestion } from '../models/question-textarea';
+import { DateQuestion } from '../models/question-date';
+import { DropdownQuestion } from '../models/question-dropdown';
+import { CheckboxQuestion } from '../models/question-checkbox';
+import { RadioQuestion } from '../models/question-radio';
+import { TextboxArrayQuestion } from '../models/question-textbox-array';
+import { FileQuestion } from '../models/question-file';
+import { GroupQuestion } from '../models/question-group';
 
 const toolQuestions: QuestionBase<any>[] = [
   new DropdownQuestion({
@@ -21,42 +22,51 @@ const toolQuestions: QuestionBase<any>[] = [
     key: 'brend-type'
   }),
 
-  new FileQuestion({
-    label: 'Гарантийный талон (фото)',
-    required: true,
-    order: 0.2,
-    key: 'warranty-img'
+  new GroupQuestion({
+    order: 0.3,
+    items: [
+      new FileQuestion({
+        label: 'Гарантийный талон (фото)',
+        required: true,
+        order: 0.2,
+        key: 'warranty-img'
+      }),
+      new DateQuestion({
+        label: 'Дата продажи',
+        required: true,
+        order: 4,
+        key: 'tool-sale-date'
+      })
+    ]
   }),
 
-  new TextboxQuestion({
-    label: 'Артикул (торговое название инструмента)',
-    type: 'text',
-    required: true,
-    order: 1,
-    key: 'tool-vendor-code'
-  }),
+  new GroupQuestion({
+    order: 0.5,
+    items: [
+      new TextboxQuestion({
+        label: 'Артикул (торговое название инструмента)',
+        type: 'text',
+        required: true,
+        order: 1,
+        key: 'tool-vendor-code'
+      }),
 
-  new TextboxQuestion({
-    label: 'Тип инструмента (код изделия)',
-    type: 'text',
-    required: true,
-    order: 2,
-    key: 'tool-type'
-  }),
+      new TextboxQuestion({
+        label: 'Тип инструмента (код изделия)',
+        type: 'text',
+        required: true,
+        order: 2,
+        key: 'tool-type'
+      }),
 
-  new TextboxQuestion({
-    label: 'Заводской номер (серийный номер)',
-    type: 'number',
-    required: true,
-    order: 3,
-    key: 'tool-serial-number'
-  }),
-
-  new DateQuestion({
-    label: 'Дата продажи',
-    required: true,
-    order: 4,
-    key: 'tool-sale-date'
+      new TextboxQuestion({
+        label: 'Заводской номер (серийный номер)',
+        type: 'text',
+        required: true,
+        order: 3,
+        key: 'tool-serial-number'
+      })
+    ]
   }),
 
   new TextboxQuestion({

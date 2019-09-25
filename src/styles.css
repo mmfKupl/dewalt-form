@@ -21,6 +21,7 @@ body {
 
 body {
   margin: 0;
+  height: 100vh;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
@@ -38,37 +39,33 @@ body {
 }
 
 .main {
-  margin: 2rem 15rem;
-  width: auto;
-  position: absolute;
-  top: 5rem;
-  bottom: 8rem;
-  left: 0;
-  right: 0;
-  overflow: auto;
+  padding: 2rem 0 1rem;
   background-color: #fff;
+  overflow: auto;
   color: #000;
+  flex-grow: 1;
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
   height: 8rem;
 }
 
-.main__nav {
+.body__nav {
+  color: #000;
   background-color: #fff;
-  padding: 1rem 4rem 0;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
   display: flex;
   justify-content: flex-end;
   z-index: 10000;
   flex-wrap: wrap;
+  flex-direction: row-reverse;
+  padding: 0 1rem;
+}
+
+.body__nav,
+.main {
+  min-width: 30rem;
+  max-width: 50rem;
+  width: 100%;
 }
 
 .button {
@@ -81,9 +78,9 @@ body {
   font: inherit;
   color: inherit;
   cursor: pointer;
-  border-radius: 0.5rem;
+  /* border-radius: 0.5rem; */
   min-width: 6rem;
-  transition: box-shadow 250ms, border 250ms;
+  transition: box-shadow 250ms, border 250ms, background-color 250ms;
 }
 
 .button:hover {
@@ -159,14 +156,14 @@ body {
   min-width: auto;
 }
 
-.main__nav-button {
-  margin-left: 3rem;
+.body__nav-button {
+  margin-right: 3rem;
   margin-bottom: 1rem;
   background-color: #fff;
 }
 
-.main__nav-button:first-child {
-  margin-left: 0;
+.body__nav-button:first-child {
+  margin-right: 0;
 }
 
 .input,
@@ -180,13 +177,13 @@ body {
   background-color: #fff;
   background-image: none;
   border: 1px solid #ccc;
-  border-radius: 0.3rem;
+  /* border-radius: 0.3rem; */
 }
 
 .textarea {
   max-width: 100%;
   min-width: 100%;
-  min-height: 7rem;
+  min-height: 4rem;
 }
 
 .input {
@@ -247,7 +244,7 @@ body {
   min-width: unset;
   display: block;
   padding: 0.5rem 0.8rem;
-  border-radius: 0.3rem;
+  /* border-radius: 0.3rem; */
   text-align: left;
   margin-bottom: 0.5rem;
   margin-right: 1rem;
@@ -257,11 +254,14 @@ body {
 .header__nav {
   display: flex;
   flex-wrap: wrap;
-  margin-left: 10rem;
   vertical-align: middle;
+  left: 50%;
+  transform: translate(-50%, 0);
+  position: absolute;
 }
 
 .header__nav-h3 {
+  transition: all 400ms;
   color: #dddddd;
   font-weight: bold;
   letter-spacing: 2px;
@@ -279,6 +279,8 @@ body {
 
 .header__nav-h3__current {
   color: #febd17;
+  transform: scale(1.1);
+  margin: 0 1.2rem 0 0.2rem;
 }
 
 .header__link {
@@ -323,16 +325,23 @@ ng-scrollbar .main__form.main__form-no-margin-bottom {
 .textbox-array__item .input {
   margin: 0;
   z-index: 1;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  /* border-top-right-radius: 0;
+  border-bottom-right-radius: 0; */
   border-right: 1px solid transparent;
+}
+
+.no-border-right {
+  /* border-top-right-radius: 0;
+  border-bottom-right-radius: 0; */
+  border-right: 1px solid transparent;
+  z-index: 1;
 }
 
 .textbox-array__item-delete {
   margin: 0;
   z-index: 1;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  /* border-top-left-radius: 0;
+  border-bottom-left-radius: 0; */
   min-width: auto;
 }
 
@@ -354,6 +363,25 @@ ng-scrollbar .main__form.main__form-no-margin-bottom {
 
 .ng-scroll-content {
   max-width: 100%;
+}
+
+.question__group {
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+}
+
+.question__group .question,
+.question__group .textbox-array__item {
+  margin-bottom: 0;
+}
+
+.question__group .group__question {
+  margin-right: 0.5rem;
+  width: 100%;
+}
+.question__group .group__question:last-child {
+  margin-right: 0;
 }
 
 @media only screen and (max-width: 1050px) {

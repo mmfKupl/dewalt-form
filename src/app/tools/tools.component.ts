@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { QuestionService } from '../question.service';
-import { QuestionBase } from '../question-base';
+import { QuestionBase } from '../models/question-base';
 import {
   FormGroup,
   AbstractControl,
@@ -10,6 +10,8 @@ import {
 } from '@angular/forms';
 import { QuestionControlService } from '../question-control.service';
 import { Subscription } from 'rxjs';
+import { ButtonData } from '../models/button-data';
+import { NavButtonsService } from '../nav-buttons.service';
 
 interface OrderToElem {
   el: AbstractControl;
@@ -32,18 +34,73 @@ export class ToolsComponent implements OnInit, OnDestroy {
   curFileKey: string;
   spinnerHidden = true;
 
+  buttons: ButtonData[] = [
+    new ButtonData(
+      'далее',
+      () => {},
+      () => {
+        return this.formArray.reduce((p, c) => {
+          return p && c.invalid;
+        }, true);
+      },
+      '/departure',
+      1,
+      true
+    ),
+    new ButtonData('назад', () => {}, false, '/address', 2, true),
+    new ButtonData(
+      'добавить',
+      () => {
+        this.addNewTool();
+      },
+      false,
+      '',
+      3,
+      true
+    ),
+    new ButtonData(
+      'удалить',
+      () => {
+        this.deleteTool();
+      },
+      () => {
+        return !this.formArray.length;
+      },
+      '',
+      4,
+      true
+    ),
+    new ButtonData(
+      'очистить',
+      () => {
+        this.curForm.reset();
+      },
+      false,
+      '',
+      5,
+      true
+    )
+  ];
+
   constructor(
     private questionService: QuestionService,
     private qcs: QuestionControlService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private nbs: NavButtonsService
   ) {}
 
   ngOnInit() {
+    this.nbs.setButtons(this.buttons);
+
     this.questions = this.questionService.getTools();
 
     this.questionService.toolsAnswer.forEach(answer => {
       this.addNewTool(answer);
     });
+
+    if (!this.formArrayData.length) {
+      this.addNewTool({});
+    }
   }
 
   ngOnDestroy() {
@@ -139,11 +196,13 @@ export class ToolsComponent implements OnInit, OnDestroy {
 
   deleteTool() {
     const ind = this.currentFormIndex;
-    if (ind === undefined || ind === null) {
+    if (ind === undefined || ind === null || ind < 0) {
       return;
     }
     this.formArray.splice(ind, 1);
-    this.questionSubscribtions[ind].unsubscribe();
+    if (this.questionSubscribtions[ind]) {
+      this.questionSubscribtions[ind].unsubscribe();
+    }
     this.questionSubscribtions.splice(ind, 1);
     this.questionService.toolsAnswer.splice(ind, 1);
     this.currentFormIndex = this.formArray.length - 1;

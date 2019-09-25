@@ -1,39 +1,78 @@
-import { QuestionBase } from '../question-base';
-import { TextboxQuestion } from '../question-textbox';
-import { TextareaQuestion } from '../question-textarea';
-import { CheckboxQuestion } from '../question-checkbox';
+import { QuestionBase } from '../models/question-base';
+import { TextboxQuestion } from '../models/question-textbox';
+import { TextareaQuestion } from '../models/question-textarea';
+import { CheckboxQuestion } from '../models/question-checkbox';
+import { GroupQuestion } from '../models/question-group';
 
 const departureQuestions: QuestionBase<any>[] = [
   new TextboxQuestion({
-    label: 'Вес, кг',
+    label: 'Количество грузовых мест',
     type: 'number',
     required: true,
+    order: 0,
+    key: 'amount-of-boxes'
+  }),
+
+  new GroupQuestion({
     order: 1,
-    key: 'd-weight'
+    items: [
+      new TextboxQuestion({
+        label: 'Общий вес, кг',
+        type: 'number',
+        required: true,
+        order: 1,
+        key: 'd-weight-total'
+      }),
+
+      new TextboxQuestion({
+        label: 'Вес самого тяжелого груза, кг',
+        type: 'number',
+        required: true,
+        order: 1,
+        key: 'd-weight'
+      })
+    ]
   }),
 
-  new TextboxQuestion({
-    label: 'Ширина, см',
-    type: 'number',
-    required: true,
+  new GroupQuestion({
     order: 2,
-    key: 'd-width'
+    items: [
+      new TextboxQuestion({
+        label: 'Ширина, см',
+        type: 'number',
+        required: true,
+        order: 2,
+        key: 'd-width'
+      }),
+
+      new TextboxQuestion({
+        label: 'Высота, см',
+        type: 'number',
+        required: true,
+        order: 3,
+        key: 'd-height'
+      }),
+
+      new TextboxQuestion({
+        label: 'Длинна, см',
+        type: 'number',
+        required: true,
+        order: 4,
+        key: 'd-length'
+      })
+    ]
   }),
 
-  new TextboxQuestion({
-    label: 'Высота, см',
-    type: 'number',
-    required: true,
-    order: 3,
-    key: 'd-height'
+  new CheckboxQuestion({
+    order: 5,
+    label: 'Доверенность на получение',
+    key: 'power-of-attorney'
   }),
 
-  new TextboxQuestion({
-    label: 'Длинна, см',
-    type: 'number',
-    required: true,
-    order: 4,
-    key: 'd-length'
+  new CheckboxQuestion({
+    order: 6,
+    label: 'Пропуск на въезд',
+    key: 'pass'
   })
 ];
 

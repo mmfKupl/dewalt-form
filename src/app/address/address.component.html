@@ -1,20 +1,7 @@
-<ng-scrollbar>
-  <form class="main__form" [formGroup]="form">
-    <app-question
-      *ngFor="let question of questions"
-      [question]="question"
-      [form]="form"
-    ></app-question>
-  </form>
-</ng-scrollbar>
-<nav class="main__nav">
-  <button class="main__nav-button button" routerLink="/sender">назад</button>
-  <button
-    [class.disabled]="!isValid"
-    class="main__nav-button button"
-    routerLink="/tools"
-  >
-    далее
-  </button>
-</nav>
-<!-- [disabled]="form.invalid" -->
+<form class="main__form" [formGroup]="form">
+  <app-question
+    *ngFor="let question of questions"
+    [question]="question"
+    [form]="form"
+  ></app-question>
+</form>

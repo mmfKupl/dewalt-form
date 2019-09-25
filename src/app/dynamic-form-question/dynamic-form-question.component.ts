@@ -6,7 +6,7 @@ import {
   AfterViewChecked
 } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { Options } from '../options';
+import { Options } from '../models/options';
 
 import {
   MAT_MOMENT_DATE_FORMATS,
