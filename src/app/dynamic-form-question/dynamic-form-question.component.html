@@ -8,7 +8,7 @@
   [ngSwitch]="question.controlType"
 >
   <label
-    *ngIf="question.label"
+    *ngIf="question.controlType !== 'checkbox' && question.label"
     class="question__label"
     [attr.for]="question.key"
     >{{ question.label }}
