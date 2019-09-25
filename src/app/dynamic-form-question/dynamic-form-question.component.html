@@ -8,10 +8,7 @@
   [ngSwitch]="question.controlType"
 >
   <label
-    *ngIf="
-      question.controlType !== 'checkbox' ||
-      (question.controlType !== 'group' && !question.label)
-    "
+    *ngIf="question.label"
     class="question__label"
     [attr.for]="question.key"
     >{{ question.label }}
@@ -23,8 +20,8 @@
       *ngFor="let item of question.items"
       [question]="item"
       [form]="form"
-      (formArrayButtonClick)="addNewFormControl($event)"
-      (fileChange)="onFileChange($event)"
+      (formArrayButtonClick)="addNewFormControl()"
+      (fileChange)="onFileChange($event.target)"
       [fileName]="fileName"
       [spinnerHidden]="spinnerHidden"
     ></app-question>
