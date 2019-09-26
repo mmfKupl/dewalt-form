@@ -19,7 +19,7 @@ export class AppComponent implements OnInit, OnDestroy {
   showToolsSubscription: Subscription;
   showTools = false;
   toolsClickHandlerSubscription: Subscription;
-  toolsClickHandler = () => {};
+  toolsClickHandler = i => {};
 
   constructor(private scs: SideComponentsServie) {}
 
