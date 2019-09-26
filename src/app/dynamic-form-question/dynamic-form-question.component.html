@@ -14,19 +14,6 @@
     >{{ question.label }}
   </label>
 
-  <div *ngSwitchCase="'group'" class="question__group">
-    <app-question
-      class="group__question"
-      *ngFor="let item of question.items"
-      [question]="item"
-      [form]="form"
-      (formArrayButtonClick)="addNewFormControl()"
-      (fileChange)="onFileChange($event.target)"
-      [fileName]="fileName"
-      [spinnerHidden]="spinnerHidden"
-    ></app-question>
-  </div>
-
   <input
     *ngSwitchCase="'textbox'"
     class="question__answer question__input
@@ -36,7 +23,11 @@
     [type]="question.type"
     [required]="question.required"
     [name]="question.name || question.key"
+    [placeholder]="question.plaseholder || ''"
     [maxlength]="question.fixedLength || null"
+    [step]="question.step || null"
+    [min]="question.min"
+    [max]="question.max"
   />
 
   <div
@@ -52,14 +43,13 @@
       [matDatepicker]="picker"
       [name]="question.name || question.key"
     />
-    <button
+    <input
+      type="button"
       class="textbox-array__item-delete button inset-shadow file__label"
-      mat-raised-button
       (click)="picker.open()"
-    >
-      выбрать
-    </button>
-    <mat-datepicker #picker></mat-datepicker>
+      value="выбрать"
+    />
+    <mat-datepicker [touchUi]="isMobile()" #picker></mat-datepicker>
   </div>
 
   <div *ngSwitchCase="'file'" class="question__filebox" #fileContainer>
@@ -70,13 +60,24 @@
         [class.ng-invalid]="!fileName"
         [class.ng-valid]="fileName"
         readonly
+        (click)="fileBtn.click()"
+        (keydown.space)="fileBtn.click()"
+        (keydown.enter)="fileBtn.click()"
+        aria-label="choose file btn"
       />
       <label
+        #fileBtn
         [for]="question.key"
-        class="textbox-array__item-delete button inset-shadow file__label"
+        class="textbox-array__item-delete button inset-shadow file__label no-border-right"
       >
         выбрать
       </label>
+      <button
+        (click)="onFileDelete(question.key)"
+        class="textbox-array__item-delete button inset-shadow file__label"
+      >
+        удалить
+      </button>
       <div class="filebox__file-spinner-box" [class.hidden]="spinnerHidden">
         <mat-progress-spinner
           class="filebox__file-spinner"
@@ -95,6 +96,20 @@
     />
   </div>
 
+  <div *ngSwitchCase="'group'" class="question__group">
+    <app-question
+      class="group__question"
+      *ngFor="let item of question.items"
+      [question]="item"
+      [form]="form"
+      (formArrayButtonClick)="addNewFormControl()"
+      (fileChange)="onFileChange($event)"
+      (fileDelete)="onFileDelete($event)"
+      [fileName]="fileName"
+      [spinnerHidden]="spinnerHidden"
+    ></app-question>
+  </div>
+
   <div *ngSwitchCase="'textbox-array'" class="question__textbox-array">
     <div class="textbox-array__items" [formArrayName]="question.key">
       <label
@@ -102,13 +117,13 @@
         *ngFor="let inp of getFormArray(question.key).controls; let i = index"
       >
         <input
-          class="question__answer question__input input"
+          class="question__answer question__input input file__input"
           [type]="question.type"
           [id]="i"
           [formControlName]="i"
         />
         <button
-          class="textbox-array__item-delete button inset-shadow"
+          class="textbox-array__item-delete button inset-shadow file__label"
           (click)="onFormArrayButtonClick('delete', i)"
         >
           удалить
@@ -158,9 +173,11 @@
     [formControlName]="question.key"
     [required]="question.required"
   >
-    <mat-option *ngFor="let opt of question.options" [value]="opt.key">{{
-      opt.value
-    }}</mat-option>
+    <mat-option
+      *ngFor="let opt of question.options"
+      [value]="{ value: opt.value, key: opt.key }"
+      >{{ opt.value }}</mat-option
+    >
   </mat-select>
 
   <textarea
@@ -170,5 +187,6 @@
     [id]="question.key"
     [required]="question.required"
     [name]="question.name || question.key"
+    minlength="10"
   ></textarea>
 </div>

@@ -24,6 +24,7 @@ import {
 } from '@angular/material';
 
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { ConfirmationPageComponent } from './confirmation-page/confirmation-page.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
     SenderComponent,
     AddressComponent,
     ToolsComponent,
-    DepartureComponent
+    DepartureComponent,
+    ConfirmationPageComponent
   ],
   imports: [
     BrowserModule,

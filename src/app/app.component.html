@@ -2,9 +2,21 @@
   <app-header></app-header>
 </header>
 <main class="main">
-  <ng-scrollbar>
+  <section class="main__router-outlet-wrapper">
     <router-outlet></router-outlet>
-  </ng-scrollbar>
+  </section>
+  <section class="tools" *ngIf="showTools && tools.length">
+    <button
+      class="tools__tool button"
+      *ngFor="let tool of tools; let i = index"
+      [class.button-selected]="i === currentToolIndex"
+      [class.button-invalid]="tool.invalid"
+      [class.button-valid]="tool.valid"
+      (click)="toolsClickHandler(i)"
+    >
+      {{ tool.value['tool-vendor-code'] || 'без артикула' }}
+    </button>
+  </section>
 </main>
 <nav class="body__nav">
   <button

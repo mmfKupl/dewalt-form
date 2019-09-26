@@ -16,7 +16,8 @@ export class QuestionService {
     { path: '/sender', title: 'Отправитель', order: 1 },
     { path: '/address', title: 'Адрес загрузки', order: 2 },
     { path: '/tools', title: 'Инструменты', order: 3 },
-    { path: '/departure', title: 'Отправление', order: 4 }
+    { path: '/departure', title: 'Отправление', order: 4 },
+    { path: '/confirmation', title: 'Подтверждение', order: 5 }
   ];
 
   getSender() {

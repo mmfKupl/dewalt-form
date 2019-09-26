@@ -46,19 +46,18 @@ const donloadingAddressQuestions: QuestionBase<any>[] = [
     order: 2,
     label: 'Улица',
     items: [
+      new DropdownQuestion({
+        label: 'тип',
+        options: streetTypes,
+        order: 1,
+        key: 'street-type'
+      }),
       new TextboxQuestion({
         label: 'название',
         type: 'text',
         required: true,
         order: 2,
         key: 'street'
-      }),
-
-      new DropdownQuestion({
-        label: 'тип',
-        options: streetTypes,
-        order: 2,
-        key: 'street-type'
       })
     ]
   }),

@@ -4,7 +4,7 @@ import { QuestionBase } from '../models/question-base';
 import { FormGroup } from '@angular/forms';
 import { QuestionControlService } from '../question-control.service';
 import { Subscription } from 'rxjs';
-import { NavButtonsService } from '../nav-buttons.service';
+import { SideComponentsServie } from '../side-components.service';
 import { ButtonData } from '../models/button-data';
 
 @Component({
@@ -45,11 +45,11 @@ export class AddressComponent implements OnInit, OnDestroy {
   constructor(
     private questionService: QuestionService,
     private qcs: QuestionControlService,
-    private nbs: NavButtonsService
+    private ncs: SideComponentsServie
   ) {}
 
   ngOnInit() {
-    this.nbs.setButtons(this.buttons);
+    this.ncs.setButtons(this.buttons);
 
     this.questions = this.questionService.getAddress();
     this.form = this.qcs.toFormGroup(this.questions);

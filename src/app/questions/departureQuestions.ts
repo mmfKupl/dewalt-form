@@ -13,26 +13,29 @@ const departureQuestions: QuestionBase<any>[] = [
     key: 'amount-of-boxes'
   }),
 
-  new GroupQuestion({
+  // new GroupQuestion({
+  //   order: 1,
+  //   items: [
+  new TextboxQuestion({
+    label: 'Общий вес, кг',
+    type: 'number',
+    required: true,
     order: 1,
-    items: [
-      new TextboxQuestion({
-        label: 'Общий вес, кг',
-        type: 'number',
-        required: true,
-        order: 1,
-        key: 'd-weight-total'
-      }),
-
-      new TextboxQuestion({
-        label: 'Вес самого тяжелого груза, кг',
-        type: 'number',
-        required: true,
-        order: 1,
-        key: 'd-weight'
-      })
-    ]
+    key: 'd-weight-total',
+    step: 0.01,
+    min: 0,
+    plaseholder: '0.00'
   }),
+
+  // new TextboxQuestion({
+  //   label: 'Вес самого тяжелого груза, кг',
+  //   type: 'number',
+  //   required: true,
+  //   order: 1,
+  //   key: 'd-weight'
+  // })
+  //   ]
+  // }),
 
   new GroupQuestion({
     order: 2,
@@ -42,6 +45,7 @@ const departureQuestions: QuestionBase<any>[] = [
         type: 'number',
         required: true,
         order: 2,
+        min: 0,
         key: 'd-width'
       }),
 
@@ -50,6 +54,7 @@ const departureQuestions: QuestionBase<any>[] = [
         type: 'number',
         required: true,
         order: 3,
+        min: 0,
         key: 'd-height'
       }),
 
@@ -58,6 +63,7 @@ const departureQuestions: QuestionBase<any>[] = [
         type: 'number',
         required: true,
         order: 4,
+        min: 0,
         key: 'd-length'
       })
     ]

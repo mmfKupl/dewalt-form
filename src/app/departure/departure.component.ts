@@ -4,7 +4,7 @@ import { QuestionBase } from '../models/question-base';
 import { FormGroup, FormControl } from '@angular/forms';
 import { QuestionControlService } from '../question-control.service';
 import { Subscription } from 'rxjs';
-import { NavButtonsService } from '../nav-buttons.service';
+import { SideComponentsServie } from '../side-components.service';
 import { ButtonData } from '../models/button-data';
 
 @Component({
@@ -25,7 +25,7 @@ export class DepartureComponent implements OnInit, OnDestroy {
       () => {
         return this.form.invalid;
       },
-      '',
+      '/confirmation',
       1,
       true
     ),
@@ -45,11 +45,11 @@ export class DepartureComponent implements OnInit, OnDestroy {
   constructor(
     private questionService: QuestionService,
     private qcs: QuestionControlService,
-    private nbs: NavButtonsService
+    private scs: SideComponentsServie
   ) {}
 
   ngOnInit() {
-    this.nbs.setButtons(this.buttons);
+    this.scs.setButtons(this.buttons);
 
     this.questions = this.questionService.getDeparture();
     this.form = this.qcs.toFormGroup(this.questions);

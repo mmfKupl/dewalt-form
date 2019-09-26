@@ -11,7 +11,7 @@ import {
 import { QuestionControlService } from '../question-control.service';
 import { Subscription } from 'rxjs';
 import { ButtonData } from '../models/button-data';
-import { NavButtonsService } from '../nav-buttons.service';
+import { SideComponentsServie } from '../side-components.service';
 
 interface OrderToElem {
   el: AbstractControl;
@@ -39,9 +39,9 @@ export class ToolsComponent implements OnInit, OnDestroy {
       'далее',
       () => {},
       () => {
-        return this.formArray.reduce((p, c) => {
-          return p && c.invalid;
-        }, true);
+        return !!this.formArray.reduce((p, c, i) => {
+          return p - Number(c.valid);
+        }, this.formArray.length);
       },
       '/departure',
       1,
@@ -73,7 +73,7 @@ export class ToolsComponent implements OnInit, OnDestroy {
     new ButtonData(
       'очистить',
       () => {
-        this.curForm.reset();
+        this.resetCurForm();
       },
       false,
       '',
@@ -86,11 +86,16 @@ export class ToolsComponent implements OnInit, OnDestroy {
     private questionService: QuestionService,
     private qcs: QuestionControlService,
     private cd: ChangeDetectorRef,
-    private nbs: NavButtonsService
+    private scs: SideComponentsServie
   ) {}
 
   ngOnInit() {
-    this.nbs.setButtons(this.buttons);
+    this.scs.setShowTools(true);
+    this.scs.setButtons(this.buttons);
+    this.scs.setToolClickHandler((i: number) => {
+      this.onClickToTool(i);
+    });
+    this.scs.setTools(this.formArray);
 
     this.questions = this.questionService.getTools();
 
@@ -98,14 +103,20 @@ export class ToolsComponent implements OnInit, OnDestroy {
       this.addNewTool(answer);
     });
 
-    if (!this.formArrayData.length) {
+    if (!this.formArray.length) {
       this.addNewTool({});
     }
   }
 
   ngOnDestroy() {
+    this.scs.setShowTools(false);
     this.questionSubscribtions.forEach(q => q.unsubscribe());
     this.chargerTypeSubscriptions.forEach(q => q.unsubscribe());
+  }
+
+  resetCurForm() {
+    this.curForm.reset();
+    this.curFilePath = '';
   }
 
   addNewTool(answer = {}) {
@@ -192,6 +203,8 @@ export class ToolsComponent implements OnInit, OnDestroy {
         this.questionService.toolsAnswer[curInd] = { ...values };
       })
     );
+    this.scs.setTools(this.formArray);
+    this.scs.setCurrentToolIndex(this.currentFormIndex);
   }
 
   deleteTool() {
@@ -206,14 +219,26 @@ export class ToolsComponent implements OnInit, OnDestroy {
     this.questionSubscribtions.splice(ind, 1);
     this.questionService.toolsAnswer.splice(ind, 1);
     this.currentFormIndex = this.formArray.length - 1;
+    this.scs.setTools(this.formArray);
+    this.scs.setCurrentToolIndex(this.currentFormIndex);
   }
 
   onClickToTool(i: number) {
     this.currentFormIndex = i;
+    this.scs.setCurrentToolIndex(this.currentFormIndex);
     this.curFilePath =
       (this.curForm.get(this.curFileKey) &&
+        this.curForm.get(this.curFileKey).value &&
         this.curForm.get(this.curFileKey).value.fileName) ||
       '';
+  }
+
+  onFileDelete(key: string) {
+    const curElem = this.curForm.get(key);
+    if (curElem) {
+      curElem.reset();
+      this.curFilePath = '';
+    }
   }
 
   onFileChange(elem: HTMLInputElement) {
@@ -240,10 +265,6 @@ export class ToolsComponent implements OnInit, OnDestroy {
 
   get curForm(): FormGroup | null {
     return this.formArray[this.currentFormIndex] || null;
-  }
-
-  get formArrayData() {
-    return this.formArray.map(f => (f ? f.value : ''));
   }
 
   get isDisableDeleteButton() {

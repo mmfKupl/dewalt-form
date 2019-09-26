@@ -8,20 +8,9 @@
     [question]="question"
     [form]="curForm"
     (formArrayButtonClick)="addNewControlToArray($event)"
+    (fileDelete)="onFileDelete($event)"
     (fileChange)="onFileChange($event)"
     [fileName]="curFilePath"
     [spinnerHidden]="spinnerHidden"
   ></app-question>
 </form>
-<section class="tools" *ngIf="formArray.length">
-  <button
-    class="tools__tool button"
-    (click)="onClickToTool(i)"
-    *ngFor="let tool of formArrayData; let i = index"
-    [class.button-selected]="i === currentFormIndex"
-    [class.button-invalid]="formArray[i].invalid"
-    [class.button-valid]="formArray[i].valid"
-  >
-    {{ tool['tool-vendor-code'] || 'без артикула' }}
-  </button>
-</section>

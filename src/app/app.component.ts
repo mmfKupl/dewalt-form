@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { NavButtonsService } from './nav-buttons.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { SideComponentsServie } from './side-components.service';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ButtonData } from './models/button-data';
 
 @Component({
@@ -8,23 +9,62 @@ import { ButtonData } from './models/button-data';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   buttonsSubscriptin: Subscription;
   buttons: ButtonData[] = [];
-  constructor(private navBtnService: NavButtonsService) {}
+  toolsSubscriptin: Subscription;
+  tools: any[] = [];
+  currentToolIndexSubscription: Subscription;
+  currentToolIndex: number;
+  showToolsSubscription: Subscription;
+  showTools = false;
+  toolsClickHandlerSubscription: Subscription;
+  toolsClickHandler = () => {};
+
+  constructor(private scs: SideComponentsServie) {}
 
   ngOnInit() {
-    this.buttonsSubscriptin = this.navBtnService.buttons$.subscribe(arr => {
+    this.buttonsSubscriptin = this.scs.buttons$.subscribe(arr => {
       setTimeout(() => {
         this.buttons = arr.sort((a, b) => b.order - a.order);
       });
     });
+    this.toolsSubscriptin = this.scs.tools$.subscribe(arr => {
+      setTimeout(() => {
+        this.tools = arr;
+      });
+    });
+    this.currentToolIndexSubscription = this.scs.currentToolIndex$.subscribe(
+      ind => {
+        setTimeout(() => {
+          this.currentToolIndex = ind;
+        });
+      }
+    );
+    this.showToolsSubscription = this.scs.showTools$.subscribe(flag => {
+      setTimeout(() => {
+        this.showTools = flag;
+      });
+    });
+    this.toolsClickHandlerSubscription = this.scs.toolClickHandler$.subscribe(
+      fn => {
+        setTimeout(() => {
+          this.toolsClickHandler = fn;
+        });
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.showToolsSubscription.unsubscribe();
+    this.toolsSubscriptin.unsubscribe();
+    this.buttonsSubscriptin.unsubscribe();
+    this.currentToolIndexSubscription.unsubscribe();
+    this.toolsClickHandlerSubscription.unsubscribe();
   }
 
   getDisabled(i: number): boolean {
     const b = this.buttons[i];
-    if (i === 3) {
-    }
     return typeof b.disabled === 'function' ? b.disabled() : b.disabled;
   }
 }

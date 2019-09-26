@@ -16,4 +16,8 @@ export class Options<T> {
   values?: any[];
   inputs?: any[];
   items?: QuestionBase<any>[];
+  step?: number;
+  min?: number;
+  plaseholder?: string;
+  max?: number;
 }

@@ -5,7 +5,7 @@ import { FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Subscription, of } from 'rxjs';
 import { QuestionControlService } from '../question-control.service';
 import { ButtonData } from '../models/button-data';
-import { NavButtonsService } from '../nav-buttons.service';
+import { SideComponentsServie } from '../side-components.service';
 
 interface OrderToElem {
   el: AbstractControl;
@@ -51,14 +51,16 @@ export class SenderComponent implements OnInit, OnDestroy {
   constructor(
     private questionService: QuestionService,
     private qcs: QuestionControlService,
-    private nbs: NavButtonsService
+    private ncs: SideComponentsServie
   ) {}
 
   ngOnInit() {
-    this.nbs.setButtons(this.buttons);
+    this.ncs.setButtons(this.buttons);
 
     this.questions = this.questionService.getSender();
+    console.log(this.questions);
     this.form = this.qcs.toFormGroup(this.questions);
+    console.log(this.form);
 
     const drd = this.questions.find(el => el.controlType === 'dropdown');
 
@@ -75,20 +77,25 @@ export class SenderComponent implements OnInit, OnDestroy {
       }
       this.senderTypeSubscription = this.form
         .get(drd.key)
-        .valueChanges.subscribe(value => {
+        .valueChanges.subscribe(valueData => {
           arr.forEach(el => {
-            if (el.orderTo === value) {
+            if (el.orderTo === valueData.key) {
+              console.log('0?');
               const vs = [Validators.required];
               if (el.fixedLength) {
+                console.log('1?');
                 vs.push(Validators.minLength(el.fixedLength));
               }
               el.el.setValidators(vs);
             } else {
+              console.log('2?');
               el.el.setValidators(null);
             }
+            console.log('3?');
             el.el.reset();
             el.el.markAsTouched();
           });
+          console.log(this.form);
         });
     }
 

@@ -40,6 +40,7 @@ export class DynamicFormQuestionComponent {
 
   @Output() formArrayButtonClick = new EventEmitter<string>();
   @Output() fileChange = new EventEmitter<HTMLInputElement>();
+  @Output() fileDelete = new EventEmitter<string>();
 
   onFormArrayButtonClick(action: string, i: number = -1) {
     this.formArrayButtonClick.emit(i.toString());
@@ -47,6 +48,10 @@ export class DynamicFormQuestionComponent {
 
   onFileChange(elem: HTMLInputElement) {
     this.fileChange.emit(elem);
+  }
+
+  onFileDelete(key: string) {
+    this.fileDelete.emit(key);
   }
 
   getDiametr(elem: HTMLDivElement) {
@@ -65,5 +70,9 @@ export class DynamicFormQuestionComponent {
     return this.getFormArray(this.question.key).push(
       new FormControl('', Validators.required)
     );
+  }
+
+  isMobile(): boolean {
+    return navigator.userAgent.toLowerCase().includes('mobile');
   }
 }

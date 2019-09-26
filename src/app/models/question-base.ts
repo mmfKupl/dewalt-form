@@ -14,6 +14,10 @@ export class QuestionBase<T> {
   values?: any[];
   inputs?: any[];
   items?: QuestionBase<any>[];
+  step?: number;
+  min?: number;
+  plaseholder?: string;
+  max?: number;
 
   constructor(options: Options<T> = {}) {
     this.value = options.value;
@@ -29,5 +33,9 @@ export class QuestionBase<T> {
     this.values = options.values;
     this.inputs = options.inputs;
     this.items = options.items;
+    this.step = options.step;
+    this.min = options.min;
+    this.plaseholder = options.plaseholder;
+    this.max = options.max;
   }
 }
