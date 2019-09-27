@@ -5,6 +5,7 @@
         Отправитель
       </td>
     </tr>
+
     <tr
       class="table__tr"
       *ngFor="let a of senderAnswer; let i = index; let odd = odd"
@@ -20,6 +21,7 @@
     <tr class="table__tr table__space">
       <td></td>
     </tr>
+
     <tr class="table__tr table__label">
       <td class="table__td" colspan="2">
         Адрес загрузки
@@ -36,26 +38,33 @@
         {{ a.value }}
       </td>
     </tr>
+
     <tr class="table__tr table__space">
       <td></td>
     </tr>
 
-    <!-- <tr class="table__tr table__label">
-      <h2 class="confirmation__section-h2">Инструменты</h2>
-    </tr> -->
-
-    <!-- <table class="table__tr" *ngFor="let tool of toolsAnswer; let i = index">
-    <tr class="table__tr" *ngFor="let a of tool; let j = index">
-      {{
-        i
-      }}
-      <td class="table__td">
-        {{ a.label }}
+    <tr class="table__tr table__label">
+      <td class="table__td" colspan="2">
+        Инструменты
       </td>
-      <td class="table__td">{{ i }} {{ j }} {{ a.value }}</td>
     </tr>
-    <tr></tr>
-  </table> -->
+    <table
+      class="table table__inner"
+      [class.table-odd]="todd"
+      *ngFor="let tool of toolsAnswer; let todd = odd; let i = index"
+    >
+      <tr class="table__tr table__label">
+        <td class="table__td" colspan="2">инструмент №{{ i + 1 }}</td>
+      </tr>
+      <tr class="table__tr" *ngFor="let a of tool; let odd = odd">
+        <td class="table__td" [class.table__td-odd]="odd">{{ a.label }}</td>
+        <td class="table__td" [class.table__td-odd]="odd">{{ a.value }}</td>
+      </tr>
+    </table>
+
+    <tr class="table__tr table__space">
+      <td></td>
+    </tr>
 
     <tr class="table__tr table__label">
       <td class="table__td" colspan="2">

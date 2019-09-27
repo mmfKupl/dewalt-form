@@ -90,6 +90,7 @@ export class ToolsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    console.log('init');
     this.scs.setShowTools(true);
     this.scs.setButtons(this.buttons);
     this.scs.setToolClickHandler((i: number) => {
@@ -178,7 +179,6 @@ export class ToolsComponent implements OnInit, OnDestroy {
           el.el.markAsTouched();
         });
       };
-
       arr.forEach(elem => {
         const curControl = this.curForm.get(elem.key);
         if (
@@ -196,6 +196,7 @@ export class ToolsComponent implements OnInit, OnDestroy {
         .valueChanges.subscribe(value => {
           setValidators(value);
         });
+      this.curForm.get(radio.key).patchValue(answer[radio.key]);
     }
 
     this.questionSubscribtions.push(

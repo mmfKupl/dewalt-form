@@ -4,6 +4,8 @@ import { SideComponentsServie } from '../side-components.service';
 import { ButtonData } from '../models/button-data';
 import { QuestionBase } from '../models/question-base';
 import { GroupQuestion } from '../models/question-group';
+import { isMoment, Moment } from 'moment';
+import { FileQuestion } from '../models/question-file';
 
 @Component({
   selector: 'app-confirmation-page',
@@ -43,24 +45,60 @@ export class ConfirmationPageComponent implements OnInit {
   reduceAnswer(answer: any | any[] = {}, questions: any[] = []) {
     if (Array.isArray(answer)) {
       const answers = [];
-
       answer.forEach(curAnswer => {
-        answers.push(this.reduceAnswer(curAnswer, questions));
+        const ans = this.reduceAnswer(curAnswer, questions);
+        answers.push(ans);
       });
       return answers;
     }
-    return this.toArray(
-      questions.reduce((p, c = {}) => {
+    const a = this.toArray(
+      questions.reduce((p, c = {}, i) => {
         if (c instanceof GroupQuestion) {
-          p = { ...p, ...this.reduceAnswer(answer, c.items) };
+          for (const item of this.reduceAnswer(answer, c.items)) {
+            const ik = answer[item.key] || {};
+            let value;
+            if (item.isFile) {
+              p[item.key] = item;
+              continue;
+            } else if (isMoment(ik)) {
+              value = (ik as Moment).format('LL');
+            } else if (item instanceof FileQuestion) {
+            } else {
+              value = typeof ik === 'object' ? ik.value : ik;
+            }
+            if (typeof value === 'boolean' && value) {
+              value = 'да';
+            }
+            if (value) {
+              p[item.key] = { value, label: item.label, order: item.order };
+            }
+          }
+        } else if (c instanceof FileQuestion && answer[c.key]) {
+          const value = answer[c.key].fileName;
+          p[c.key] = { value, label: c.label, order: c.order, isFile: true };
         } else {
           const ak = answer[c.key] || {};
-          const value = typeof ak === 'object' ? ak.value : ak;
-          p[c.key] = { value, label: c.label, order: c.order };
+          let value;
+          console.log(ak);
+          if (isMoment(ak)) {
+            value = (ak as Moment).format('LL');
+          }
+          if (Array.isArray(ak)) {
+            value = ak.join(', ');
+          } else {
+            value = typeof ak === 'object' ? ak.value : ak;
+          }
+          if (typeof value === 'boolean' && value) {
+            value = 'да';
+          }
+          if (value) {
+            p[c.key] = { value, label: c.label, order: c.order };
+          }
         }
         return p;
       }, {})
     );
+    return a;
   }
 
   toArray(object: object): object[] {
@@ -74,16 +112,17 @@ export class ConfirmationPageComponent implements OnInit {
 
   get senderAnswer() {
     const a = this.reduceAnswer(this.qs.senderAnswer, this.senderQuestions);
-    console.log(a);
     return a;
   }
 
   get addressAnswer() {
-    return this.reduceAnswer(this.qs.addressAnswer, this.addressQuestion);
+    const a = this.reduceAnswer(this.qs.addressAnswer, this.addressQuestion);
+    return a;
   }
   get toolsAnswer() {
+    console.clear();
+    console.log(this.qs.toolsAnswer);
     const a = this.reduceAnswer(this.qs.toolsAnswer, this.toolsQuestion);
-    console.log(a);
     return a;
   }
   get departureAnswer() {

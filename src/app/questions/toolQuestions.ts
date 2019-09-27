@@ -89,8 +89,8 @@ const toolQuestions: QuestionBase<any>[] = [
     order: 6,
     required: true,
     values: [
-      { label: 'Аккумуляторный', key: 'acum-type', value: 'acum' },
-      { label: 'Сетевой', key: 'net-type', value: 'net' }
+      { label: 'Аккумуляторный', key: 'Аккумуляторный', value: 'acum' },
+      { label: 'Сетевой', key: 'Сетевой', value: 'net' }
     ],
     key: 'power-type'
   }),
@@ -98,7 +98,7 @@ const toolQuestions: QuestionBase<any>[] = [
   new TextboxQuestion({
     label: 'Номер зарядного устройства',
     order: 7,
-    orderTo: 'acum-type',
+    orderTo: 'Аккумуляторный',
     hiddenIfNotRequired: true,
     key: 'charger-number',
     type: 'text'
@@ -107,7 +107,7 @@ const toolQuestions: QuestionBase<any>[] = [
   new TextboxArrayQuestion({
     label: 'Номера аккумуляторов',
     order: 8,
-    orderTo: 'acum-type',
+    orderTo: 'Аккумуляторный',
     hiddenIfNotRequired: true,
     key: 'accums-numbers',
     type: 'text'

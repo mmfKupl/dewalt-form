@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  AfterViewChecked
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Options } from '../models/options';
 

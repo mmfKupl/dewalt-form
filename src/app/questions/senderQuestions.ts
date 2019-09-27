@@ -17,7 +17,7 @@ const senderQuestions: QuestionBase<any>[] = [
   new TextboxQuestion({
     label: 'ФИО',
     type: 'text',
-    orderTo: 'individual',
+    orderTo: 'Физ. лицо',
     hiddenIfNotRequired: true,
     order: 2,
     key: 'name-fio',
@@ -27,7 +27,7 @@ const senderQuestions: QuestionBase<any>[] = [
   new TextboxQuestion({
     label: 'Наименование компании',
     type: 'text',
-    orderTo: 'entity',
+    orderTo: 'Юр. лицо',
     hiddenIfNotRequired: true,
     order: 3,
     key: 'company-name'
@@ -36,7 +36,7 @@ const senderQuestions: QuestionBase<any>[] = [
   new TextboxQuestion({
     label: 'УНП',
     type: 'text',
-    orderTo: 'entity',
+    orderTo: 'Юр. лицо',
     hiddenIfNotRequired: true,
     order: 4,
     key: 'sender-upn',

@@ -79,23 +79,18 @@ export class SenderComponent implements OnInit, OnDestroy {
         .get(drd.key)
         .valueChanges.subscribe(valueData => {
           arr.forEach(el => {
-            if (el.orderTo === valueData.key) {
-              console.log('0?');
+            if (el.orderTo === valueData) {
               const vs = [Validators.required];
               if (el.fixedLength) {
-                console.log('1?');
                 vs.push(Validators.minLength(el.fixedLength));
               }
               el.el.setValidators(vs);
             } else {
-              console.log('2?');
               el.el.setValidators(null);
             }
-            console.log('3?');
             el.el.reset();
             el.el.markAsTouched();
           });
-          console.log(this.form);
         });
     }
 
