@@ -179,8 +179,18 @@ export class ToolsComponent implements OnInit, OnDestroy {
           el.el.markAsTouched();
         });
       };
+
+      this.chargerTypeSubscriptions[this.currentFormIndex] = this.curForm
+        .get(radio.key)
+        .valueChanges.subscribe(value => {
+          setValidators(value);
+        });
+
+      this.curForm.get(radio.key).patchValue(answer[radio.key]);
+
       arr.forEach(elem => {
         const curControl = this.curForm.get(elem.key);
+        curControl.patchValue(answer[elem.key]);
         if (
           curControl &&
           ((Array.isArray(curControl.value) && curControl.value.length) ||
@@ -190,13 +200,6 @@ export class ToolsComponent implements OnInit, OnDestroy {
           setValidators(elem.orderTo, false);
         }
       });
-
-      this.chargerTypeSubscriptions[this.currentFormIndex] = this.curForm
-        .get(radio.key)
-        .valueChanges.subscribe(value => {
-          setValidators(value);
-        });
-      this.curForm.get(radio.key).patchValue(answer[radio.key]);
     }
 
     this.questionSubscribtions.push(
@@ -251,17 +254,9 @@ export class ToolsComponent implements OnInit, OnDestroy {
     if (elem.files && elem.files.length) {
       const file = elem.files[0];
       this.curFilePath = file.name;
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = res => {
-        this.spinnerHidden = true;
-        this.curForm
-          .get(elem.id)
-          .patchValue({ fileName: file.name, file: reader.result });
-        this.cd.markForCheck();
-      };
+      this.curForm.get(elem.id).patchValue({ filename: file.name, file });
     }
+    this.spinnerHidden = true;
   }
 
   get curForm(): FormGroup | null {

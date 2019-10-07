@@ -3,6 +3,7 @@ import { SideComponentsServie } from './side-components.service';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ButtonData } from './models/button-data';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-root',
@@ -21,9 +22,16 @@ export class AppComponent implements OnInit, OnDestroy {
   toolsClickHandlerSubscription: Subscription;
   toolsClickHandler = i => {};
 
-  constructor(private scs: SideComponentsServie) {}
+  constructor(
+    private scs: SideComponentsServie,
+    private aut: AngularFireAuth
+  ) {}
 
   ngOnInit() {
+    this.aut.auth.signInAnonymously().catch(err => {
+      console.error(err);
+      alert(err.message);
+    });
     this.buttonsSubscriptin = this.scs.buttons$.subscribe(arr => {
       setTimeout(() => {
         this.buttons = arr.sort((a, b) => b.order - a.order);

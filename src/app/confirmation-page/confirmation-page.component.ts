@@ -6,6 +6,7 @@ import { QuestionBase } from '../models/question-base';
 import { GroupQuestion } from '../models/question-group';
 import { isMoment, Moment } from 'moment';
 import { FileQuestion } from '../models/question-file';
+import { DatabaseService } from '../database.service';
 
 @Component({
   selector: 'app-confirmation-page',
@@ -16,7 +17,16 @@ export class ConfirmationPageComponent implements OnInit {
   buttons: ButtonData[] = [
     new ButtonData(
       'отправить',
-      () => {},
+      () => {
+        const user = this.qs.senderAnswer.email;
+        const answer = {
+          sender: this.senderAnswer,
+          address: this.addressAnswer,
+          tools: this.toolsAnswer,
+          departure: this.departureAnswer
+        };
+        this.db.saveFormAnswer(answer, user);
+      },
       () => {
         return true;
       },
@@ -32,7 +42,11 @@ export class ConfirmationPageComponent implements OnInit {
   toolsQuestion: QuestionBase<any>[] = [];
   departureQuestion: QuestionBase<any>[] = [];
 
-  constructor(private qs: QuestionService, private scs: SideComponentsServie) {}
+  constructor(
+    private qs: QuestionService,
+    private scs: SideComponentsServie,
+    private db: DatabaseService
+  ) {}
 
   ngOnInit() {
     this.scs.setButtons(this.buttons);
@@ -63,36 +77,38 @@ export class ConfirmationPageComponent implements OnInit {
             } else if (isMoment(ik)) {
               value = (ik as Moment).format('LL');
             } else if (item instanceof FileQuestion) {
-            } else {
+            } else if (typeof value !== 'boolean' && !value) {
               value = typeof ik === 'object' ? ik.value : ik;
             }
             if (typeof value === 'boolean' && value) {
               value = 'да';
             }
             if (value) {
-              p[item.key] = { value, label: item.label, order: item.order };
+              p[item.key] = {
+                value,
+                label: item.specLable || item.label,
+                order: item.order
+              };
             }
           }
         } else if (c instanceof FileQuestion && answer[c.key]) {
-          const value = answer[c.key].fileName;
+          const value = answer[c.key].file;
           p[c.key] = { value, label: c.label, order: c.order, isFile: true };
         } else {
           const ak = answer[c.key] || {};
           let value;
-          console.log(ak);
           if (isMoment(ak)) {
             value = (ak as Moment).format('LL');
-          }
-          if (Array.isArray(ak)) {
+          } else if (Array.isArray(ak)) {
             value = ak.join(', ');
-          } else {
+          } else if (typeof value !== 'boolean') {
             value = typeof ak === 'object' ? ak.value : ak;
           }
           if (typeof value === 'boolean' && value) {
             value = 'да';
           }
           if (value) {
-            p[c.key] = { value, label: c.label, order: c.order };
+            p[c.key] = { value, label: c.specLable || c.label, order: c.order };
           }
         }
         return p;
@@ -120,12 +136,14 @@ export class ConfirmationPageComponent implements OnInit {
     return a;
   }
   get toolsAnswer() {
-    console.clear();
-    console.log(this.qs.toolsAnswer);
     const a = this.reduceAnswer(this.qs.toolsAnswer, this.toolsQuestion);
     return a;
   }
   get departureAnswer() {
-    return this.reduceAnswer(this.qs.departureAnswer, this.departureQuestion);
+    const a = this.reduceAnswer(
+      this.qs.departureAnswer,
+      this.departureQuestion
+    );
+    return a;
   }
 }

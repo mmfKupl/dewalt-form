@@ -18,6 +18,7 @@ export class QuestionBase<T> {
   min?: number;
   plaseholder?: string;
   max?: number;
+  specLable?: string;
 
   constructor(options: Options<T> = {}) {
     this.value = options.value;
@@ -37,5 +38,6 @@ export class QuestionBase<T> {
     this.min = options.min;
     this.plaseholder = options.plaseholder;
     this.max = options.max;
+    this.specLable = options.specLable;
   }
 }

@@ -20,4 +20,5 @@ export class Options<T> {
   min?: number;
   plaseholder?: string;
   max?: number;
+  specLable?: string;
 }

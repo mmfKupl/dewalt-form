@@ -58,10 +58,9 @@ export class SenderComponent implements OnInit, OnDestroy {
     this.ncs.setButtons(this.buttons);
 
     this.questions = this.questionService.getSender();
-    console.log(this.questions);
     this.form = this.qcs.toFormGroup(this.questions);
-    console.log(this.form);
 
+    this.form.patchValue(this.questionService.senderAnswer);
     const drd = this.questions.find(el => el.controlType === 'dropdown');
 
     if (this.questions.find(el => !!el.orderTo) && drd) {
@@ -94,7 +93,6 @@ export class SenderComponent implements OnInit, OnDestroy {
         });
     }
 
-    this.form.patchValue(this.questionService.senderAnswer);
     this.questionSubscription = this.form.valueChanges.subscribe(values => {
       this.questionService.senderAnswer = { ...values };
     });

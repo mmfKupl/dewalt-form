@@ -26,6 +26,12 @@ import {
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { ConfirmationPageComponent } from './confirmation-page/confirmation-page.component';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { environment } from 'src/environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +46,10 @@ import { ConfirmationPageComponent } from './confirmation-page/confirmation-page
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(environment.firebase, 'dewalt.up18'),
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,

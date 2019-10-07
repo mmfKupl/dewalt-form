@@ -48,19 +48,25 @@
         Инструменты
       </td>
     </tr>
-    <table
-      class="table table__inner"
-      [class.table-odd]="todd"
-      *ngFor="let tool of toolsAnswer; let todd = odd; let i = index"
-    >
-      <tr class="table__tr table__label">
-        <td class="table__td" colspan="2">инструмент №{{ i + 1 }}</td>
-      </tr>
-      <tr class="table__tr" *ngFor="let a of tool; let odd = odd">
-        <td class="table__td" [class.table__td-odd]="odd">{{ a.label }}</td>
-        <td class="table__td" [class.table__td-odd]="odd">{{ a.value }}</td>
-      </tr>
-    </table>
+    <tr class="table__tr">
+      <td colspan="2">
+        <table
+          class="table table__inner "
+          [class.table-odd]="todd"
+          *ngFor="let tool of toolsAnswer; let todd = odd; let i = index"
+        >
+          <tr class="table__tr table__label">
+            <td class="table__td" colspan="2">инструмент №{{ i + 1 }}</td>
+          </tr>
+          <tr class="table__tr" *ngFor="let a of tool; let odd = odd">
+            <td class="table__td" [class.table__td-odd]="odd">{{ a.label }}</td>
+            <td class="table__td" [class.table__td-odd]="odd">
+              {{ a.isFile ? a.value.name : a.value }}
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
 
     <tr class="table__tr table__space">
       <td></td>

@@ -48,12 +48,14 @@ const donloadingAddressQuestions: QuestionBase<any>[] = [
     items: [
       new DropdownQuestion({
         label: 'тип',
+        specLable: 'Тип улицы',
         options: streetTypes,
         order: 1,
         key: 'street-type'
       }),
       new TextboxQuestion({
         label: 'название',
+        specLable: 'Название улицы',
         type: 'text',
         required: true,
         order: 2,
@@ -105,6 +107,7 @@ const donloadingAddressQuestions: QuestionBase<any>[] = [
         items: [
           new TextboxQuestion({
             label: 'с',
+            specLable: 'Время забора груза: С',
             type: 'time',
             required: true,
             order: 7,
@@ -113,6 +116,7 @@ const donloadingAddressQuestions: QuestionBase<any>[] = [
 
           new TextboxQuestion({
             label: 'до',
+            specLable: 'Время забора груза: ДО',
             type: 'time',
             required: true,
             order: 8,
@@ -126,6 +130,7 @@ const donloadingAddressQuestions: QuestionBase<any>[] = [
         items: [
           new TextboxQuestion({
             label: 'c',
+            specLable: 'Время обеда: С',
             type: 'time',
             order: 9,
             key: 'da-dinner-time-from'
@@ -133,6 +138,7 @@ const donloadingAddressQuestions: QuestionBase<any>[] = [
 
           new TextboxQuestion({
             label: 'до',
+            specLable: 'Время обеда: ДО',
             type: 'time',
             order: 10,
             key: 'da-dinner-time-to'
