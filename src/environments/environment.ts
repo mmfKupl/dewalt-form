@@ -2,18 +2,11 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import fitebaseConf from './firebase.config';
+
 export const environment = {
   production: false,
-  firebase: {
-    apiKey: 'AIzaSyByjou1_VPN3s65Zb2e6BJupqEIXV_Hqq8',
-    authDomain: 'dewalt-form.firebaseapp.com',
-    databaseURL: 'https://dewalt-form.firebaseio.com',
-    projectId: 'dewalt-form',
-    storageBucket: 'dewalt-form.appspot.com',
-    messagingSenderId: '519341299841',
-    appId: '1:519341299841:web:e5666bad996f66e8e1d580',
-    measurementId: 'G-T8MZSW413X'
-  }
+  firebase: fitebaseConf
 };
 
 /*
