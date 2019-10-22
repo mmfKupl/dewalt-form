@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { QuestionService } from '../question.service';
 import { SideComponentsServie } from '../side-components.service';
 import { ButtonData } from '../models/button-data';
@@ -7,6 +7,7 @@ import { GroupQuestion } from '../models/question-group';
 import { isMoment, Moment } from 'moment';
 import { FileQuestion } from '../models/question-file';
 import { DatabaseService } from '../database.service';
+import { EmailService } from '../email.service';
 
 @Component({
   selector: 'app-confirmation-page',
@@ -14,6 +15,8 @@ import { DatabaseService } from '../database.service';
   styleUrls: ['./confirmation-page.component.css']
 })
 export class ConfirmationPageComponent implements OnInit {
+  @ViewChild('resultTable', { static: true }) resultTable: ElementRef;
+
   buttons: ButtonData[] = [
     new ButtonData(
       'отправить',
@@ -25,7 +28,8 @@ export class ConfirmationPageComponent implements OnInit {
           tools: this.toolsAnswer,
           departure: this.departureAnswer
         };
-        this.db.saveFormAnswer(answer, user);
+        const html = this.resultTableHtml;
+        this.db.saveFormAnswer(answer, user, html);
       },
       () => {
         return true;
@@ -45,7 +49,8 @@ export class ConfirmationPageComponent implements OnInit {
   constructor(
     private qs: QuestionService,
     private scs: SideComponentsServie,
-    private db: DatabaseService
+    private db: DatabaseService,
+    private sp: EmailService
   ) {}
 
   ngOnInit() {
@@ -54,6 +59,10 @@ export class ConfirmationPageComponent implements OnInit {
     this.addressQuestion = this.qs.getAddress();
     this.toolsQuestion = this.qs.getTools();
     this.departureQuestion = this.qs.getDeparture();
+  }
+
+  get resultTableHtml() {
+    return this.resultTable.nativeElement.outerHTML;
   }
 
   reduceAnswer(answer: any | any[] = {}, questions: any[] = []) {

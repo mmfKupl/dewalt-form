@@ -9,7 +9,7 @@ import downloadingAddressQuestions from './questions/downloadingAddressQuestions
 export class QuestionService {
   senderAnswer = {
     'company-name': null,
-    email: '1234@mail.ru',
+    email: 'ikuplevich97@gmail.com',
     'name-contact': 'qweqwe',
     'name-fio': 'qweqwe',
     'sender-upn': null,

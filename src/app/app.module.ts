@@ -30,6 +30,10 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import {
+  AngularFireFunctionsModule,
+  FUNCTIONS_ORIGIN
+} from '@angular/fire/functions';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
@@ -50,6 +54,7 @@ import { environment } from 'src/environments/environment';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
+    AngularFireFunctionsModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
@@ -63,7 +68,7 @@ import { environment } from 'src/environments/environment';
     BrowserAnimationsModule,
     NgScrollbarModule
   ],
-  providers: [],
+  providers: [{ provide: FUNCTIONS_ORIGIN, useValue: 'http://localhost:5001' }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

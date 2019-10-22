@@ -2,6 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { utc } from 'moment';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFireFunctions } from '@angular/fire/functions';
 
 class Item {
   value: string | number | File;
@@ -21,17 +22,21 @@ class Answer {
   providedIn: 'root'
 })
 export class DatabaseService {
-  constructor(private db: AngularFirestore, private st: AngularFireStorage) {}
+  constructor(
+    private db: AngularFirestore,
+    private st: AngularFireStorage,
+    private functions: AngularFireFunctions
+  ) {}
 
   get formAnswerCollection() {
     return this.db.collection('formAnswer');
   }
 
-  async uploadFile(file: File, user: string, date: number) {
+  async uploadFile(file: File, user: string) {
     if (!file) {
       return '';
     }
-    const path = `${user}/${date}/${file.name}`;
+    const path = `${user}/${file.name}`;
     const ref = this.st.ref(path);
     const res = await ref.put(file);
     console.log(path, ref, res);
@@ -49,24 +54,38 @@ export class DatabaseService {
     return url;
   }
 
-  async saveFormAnswer(answer: Answer, user: string) {
+  async saveFormAnswer(answer: Answer, user: string, html: string) {
     try {
       const sendTime = Date.now();
       for (const tool of answer.tools) {
         const fileElem = tool.find(el => el.isFile);
-        if (fileElem) {
-          const path = await this.uploadFile(fileElem.value, user, sendTime);
+        if (fileElem && fileElem.value) {
+          const path = await this.uploadFile(fileElem.value, user);
           const url = await this.getFileUrlByPath(path);
           fileElem.value = { path, url };
         }
       }
-      answer.tools = answer.tools.map((el: Item[]) => ({ tool: el }));
-      await this.formAnswerCollection.add({
-        user,
-        answer: this.toObj(answer),
-        sendTime
-      });
-      alert('ok');
+      answer = this.toObj(answer);
+      // console.log(JSON.stringify(answer));
+      this.functions
+        .httpsCallable('sendMail')({
+          user,
+          answer,
+          answerHtml: html,
+          sendTime
+        })
+        .subscribe(res => {
+          console.log(res);
+          alert('ok');
+        });
+      // answer.tools = answer.tools.map((el: Item[]) => ({
+      //   tool: el
+      // }));
+      // await this.formAnswerCollection.add({
+      //   user,
+      //   answer: this.toObj(answer),
+      //   sendTime
+      // });
     } catch (err) {
       console.error(err);
       alert(err.message);
