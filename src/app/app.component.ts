@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SideComponentsServie } from './side-components.service';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { ButtonData } from './models/button-data';
 import { AngularFireAuth } from '@angular/fire/auth';
 

@@ -35,6 +35,7 @@ import {
   FUNCTIONS_ORIGIN
 } from '@angular/fire/functions';
 import { environment } from 'src/environments/environment';
+import { StartPageComponent } from './start-page/start-page.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { environment } from 'src/environments/environment';
     AddressComponent,
     ToolsComponent,
     DepartureComponent,
-    ConfirmationPageComponent
+    ConfirmationPageComponent,
+    StartPageComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,8 @@ import { environment } from 'src/environments/environment';
     BrowserAnimationsModule,
     NgScrollbarModule
   ],
-  providers: [{ provide: FUNCTIONS_ORIGIN, useValue: 'http://localhost:5001' }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
+// { provide: FUNCTIONS_ORIGIN, useValue: 'http://localhost:5001' }

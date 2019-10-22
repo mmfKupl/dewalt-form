@@ -36,6 +36,7 @@ export class SenderComponent implements OnInit, OnDestroy {
       1,
       true
     ),
+    new ButtonData('назад', () => {}, false, '/', 2),
     new ButtonData(
       'очистить',
       () => {
@@ -43,7 +44,7 @@ export class SenderComponent implements OnInit, OnDestroy {
       },
       false,
       '',
-      2,
+      3,
       true
     )
   ];

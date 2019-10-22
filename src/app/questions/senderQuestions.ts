@@ -52,7 +52,7 @@ const senderQuestions: QuestionBase<any>[] = [
   }),
 
   new TextboxQuestion({
-    label: 'Контактный номер',
+    label: 'Контактный номер телефона',
     type: 'tel',
     required: true,
     order: 6,

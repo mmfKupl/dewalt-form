@@ -7,7 +7,6 @@ import { GroupQuestion } from '../models/question-group';
 import { isMoment, Moment } from 'moment';
 import { FileQuestion } from '../models/question-file';
 import { DatabaseService } from '../database.service';
-import { EmailService } from '../email.service';
 
 @Component({
   selector: 'app-confirmation-page',
@@ -16,6 +15,8 @@ import { EmailService } from '../email.service';
 })
 export class ConfirmationPageComponent implements OnInit {
   @ViewChild('resultTable', { static: true }) resultTable: ElementRef;
+
+  isAgree = false;
 
   buttons: ButtonData[] = [
     new ButtonData(
@@ -32,7 +33,7 @@ export class ConfirmationPageComponent implements OnInit {
         this.db.saveFormAnswer(answer, user, html);
       },
       () => {
-        return true;
+        return !this.isAgree;
       },
       '',
       1,
@@ -49,8 +50,7 @@ export class ConfirmationPageComponent implements OnInit {
   constructor(
     private qs: QuestionService,
     private scs: SideComponentsServie,
-    private db: DatabaseService,
-    private sp: EmailService
+    private db: DatabaseService
   ) {}
 
   ngOnInit() {

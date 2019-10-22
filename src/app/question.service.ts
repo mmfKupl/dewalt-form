@@ -64,6 +64,7 @@ export class QuestionService {
   };
 
   links = [
+    { path: '/', title: 'Главная', order: 0 },
     { path: '/sender', title: 'Отправитель', order: 1 },
     { path: '/address', title: 'Адрес загрузки', order: 2 },
     { path: '/tools', title: 'Инструменты', order: 3 },

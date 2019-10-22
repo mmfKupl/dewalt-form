@@ -22,7 +22,6 @@ body {
 body {
   margin: 0;
   height: 100vh;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
 .header,
@@ -87,7 +86,8 @@ body {
   padding: 0.4rem 1.2rem;
   border: none;
   background-color: #fff;
-  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.3), inset 0px 0px 10px 0 #febd1700;
+  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.3),
+    inset 0px 0px 10px 0 rgba(254, 189, 23, 0);
   border: 1px solid rgba(0, 0, 0, 0.3);
   font: inherit;
   color: inherit;
@@ -100,7 +100,8 @@ body {
 .button:hover {
   background-color: #fff;
   border: 1px solid #febd1755;
-  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0), inset 0px 0px 10px 0 #febd1780;
+  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0),
+    inset 0px 0px 10px 0 rgba(254, 189, 23, 0.5);
 }
 .button:disabled:hover,
 .button.disabled:hover {
@@ -110,27 +111,33 @@ body {
 .button.disabled {
   cursor: not-allowed;
   background-color: rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.3), inset 0px 0px 10px 0 #febd1700;
+  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.3),
+    inset 0px 0px 10px 0 rgba(254, 189, 23, 0);
 }
 .button:focus {
   outline: none;
-  box-shadow: 0 0 8px rgba(102, 174, 233, 0.767), inset 0px 0px 10px 0 #febd1700;
+  box-shadow: 0 0 8px rgba(102, 174, 233, 0.767),
+    inset 0px 0px 10px 0 rgba(254, 189, 23, 0);
   border: 1px solid rgb(62, 168, 255);
 }
 .button:active {
   outline: none;
-  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0), inset 0px 0px 10px 0 #febd17b4;
+  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0),
+    inset 0px 0px 10px 0 rgba(254, 189, 23, 0.706);
   border: 1px solid #febd17;
 }
 
 .tools__tool.button.button-invalid {
-  box-shadow: 0px 0px 10px 0 #a9444260, inset 0px 0px 10px 0 #febd1700;
+  box-shadow: 0px 0px 10px 0 rgba(169, 68, 66, 0.376),
+    inset 0px 0px 10px 0 rgba(254, 189, 23, 0);
 }
 .tools__tool.button.button-valid {
-  box-shadow: 0px 0px 10px 0 #46a94260, inset 0px 0px 10px 0 #febd1700;
+  box-shadow: 0px 0px 10px 0 rgba(70, 169, 66, 0.376),
+    inset 0px 0px 10px 0 rgba(254, 189, 23, 0);
 }
 .tools__tool.button.button-selected {
-  box-shadow: 0px 0px 10px 0 #ffbe1ab4, inset 0px 0px 10px 0 #febd1700;
+  box-shadow: 0px 0px 10px 0 rgba(255, 190, 26, 0.706),
+    inset 0px 0px 10px 0 rgba(254, 189, 23, 0);
 }
 
 .file__input:focus + .file__label {
@@ -138,13 +145,15 @@ body {
 }
 
 .button.inset-shadow {
-  box-shadow: 0 0 8px rgba(102, 174, 233, 0), inset 0px 0px 10px 0 #febd1700;
+  box-shadow: 0 0 8px rgba(102, 174, 233, 0),
+    inset 0px 0px 10px 0 rgba(254, 189, 23, 0);
   background-color: rgb(251, 251, 251);
   padding-right: 0.5rem;
   padding-left: 0.5rem;
 }
 .button.inset-shadow:hover {
-  box-shadow: 0 0 8px rgba(102, 174, 233, 0), inset 0px 0px 10px 0 #febd1780;
+  box-shadow: 0 0 8px rgba(102, 174, 233, 0),
+    inset 0px 0px 10px 0 rgba(254, 189, 23, 0.502);
 }
 .button.inset-shadow:disabled:hover,
 .button.inset-shadow.disabled:hover {
@@ -152,14 +161,17 @@ body {
 }
 .button.inset-shadow:disabled,
 .button.inset-shadow.disabled {
-  box-shadow: 0 0 8px rgba(102, 174, 233, 0), inset 0px 0px 10px 0 #febd1700;
+  box-shadow: 0 0 8px rgba(102, 174, 233, 0),
+    inset 0px 0px 10px 0 rgba(254, 189, 23, 0);
 }
 .button.inset-shadow:focus {
-  box-shadow: 0 0 8px rgba(102, 174, 233, 0.767), inset 0px 0px 10px 0 #febd1700;
+  box-shadow: 0 0 8px rgba(102, 174, 233, 0.767),
+    inset 0px 0px 10px 0 rgba(254, 189, 23, 0);
   /* box-shadow: inset 0px 0px 10px 0 #febd1700; */
 }
 .button.inset-shadow:active {
-  box-shadow: 0 0 8px rgba(102, 174, 233, 0), inset 0px 0px 10px 0 #febd17b4;
+  box-shadow: 0 0 8px rgba(102, 174, 233, 0),
+    inset 0px 0px 10px 0 rgba(254, 189, 23, 0.706);
 }
 
 .question__input-radio {

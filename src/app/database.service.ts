@@ -1,6 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { utc } from 'moment';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
@@ -66,7 +65,6 @@ export class DatabaseService {
         }
       }
       answer = this.toObj(answer);
-      // console.log(JSON.stringify(answer));
       this.functions
         .httpsCallable('sendMail')({
           user,
@@ -78,14 +76,14 @@ export class DatabaseService {
           console.log(res);
           alert('ok');
         });
-      // answer.tools = answer.tools.map((el: Item[]) => ({
-      //   tool: el
-      // }));
-      // await this.formAnswerCollection.add({
-      //   user,
-      //   answer: this.toObj(answer),
-      //   sendTime
-      // });
+      answer.tools = answer.tools.map((el: Item[]) => ({
+        tool: el
+      }));
+      await this.formAnswerCollection.add({
+        user,
+        answer: this.toObj(answer),
+        sendTime
+      });
     } catch (err) {
       console.error(err);
       alert(err.message);
