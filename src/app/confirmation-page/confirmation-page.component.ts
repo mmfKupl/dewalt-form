@@ -22,7 +22,7 @@ export class ConfirmationPageComponent implements OnInit {
     new ButtonData(
       'отправить',
       () => {
-        const user = this.qs.senderAnswer.email;
+        const user = this.qs.senderAnswer.email || '';
         const answer = {
           sender: this.senderAnswer,
           address: this.addressAnswer,

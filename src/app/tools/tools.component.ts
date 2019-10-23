@@ -122,6 +122,7 @@ export class ToolsComponent implements OnInit, OnDestroy {
 
   addNewTool(answer = {}) {
     const newForm = this.qcs.toFormGroup(this.questions);
+    console.log(answer);
     newForm.patchValue(answer);
     for (const key in answer) {
       if (answer[key] && Array.isArray(answer[key])) {
@@ -133,7 +134,7 @@ export class ToolsComponent implements OnInit, OnDestroy {
       }
     }
     this.curFilePath =
-      (answer['warranty-img'] && answer['warranty-img'].fileName) || '';
+      (answer['warranty-img'] && answer['warranty-img'].filename) || '';
 
     this.formArray.push(newForm);
     this.currentFormIndex = this.formArray.length - 1;
@@ -187,9 +188,11 @@ export class ToolsComponent implements OnInit, OnDestroy {
         });
 
       this.curForm.get(radio.key).patchValue(answer[radio.key]);
-
       arr.forEach(elem => {
         const curControl = this.curForm.get(elem.key);
+        if (!answer[elem.key]) {
+          return;
+        }
         curControl.patchValue(answer[elem.key]);
         if (
           curControl &&
@@ -233,7 +236,7 @@ export class ToolsComponent implements OnInit, OnDestroy {
     this.curFilePath =
       (this.curForm.get(this.curFileKey) &&
         this.curForm.get(this.curFileKey).value &&
-        this.curForm.get(this.curFileKey).value.fileName) ||
+        this.curForm.get(this.curFileKey).value.filename) ||
       '';
   }
 
