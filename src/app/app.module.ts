@@ -52,7 +52,7 @@ import { StartPageComponent } from './start-page/start-page.component';
   ],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(environment.firebase, 'dewalt.up18'),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
