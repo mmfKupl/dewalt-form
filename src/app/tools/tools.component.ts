@@ -228,6 +228,11 @@ export class ToolsComponent implements OnInit, OnDestroy {
     this.currentFormIndex = this.formArray.length - 1;
     this.scs.setTools(this.formArray);
     this.scs.setCurrentToolIndex(this.currentFormIndex);
+    this.curFilePath =
+      (this.curForm.get(this.curFileKey) &&
+        this.curForm.get(this.curFileKey).value &&
+        this.curForm.get(this.curFileKey).value.filename) ||
+      '';
   }
 
   onClickToTool(i: number) {
