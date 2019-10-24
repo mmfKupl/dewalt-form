@@ -7,6 +7,7 @@ import { GroupQuestion } from '../models/question-group';
 import { isMoment, Moment } from 'moment';
 import { FileQuestion } from '../models/question-file';
 import { DatabaseService } from '../database.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-confirmation-page',
@@ -18,10 +19,16 @@ export class ConfirmationPageComponent implements OnInit {
 
   isAgree = false;
 
+  inProcess = false;
+
   buttons: ButtonData[] = [
     new ButtonData(
       'отправить',
       () => {
+        if (!this.isAgree || this.inProcess) {
+          return;
+        }
+        this.inProcess = true;
         const user = this.qs.senderAnswer.email || '';
         const answer = {
           sender: this.senderAnswer,
@@ -30,10 +37,16 @@ export class ConfirmationPageComponent implements OnInit {
           departure: this.departureAnswer
         };
         const html = this.resultTableHtml;
-        this.db.saveFormAnswer(answer, user, html);
+        this.db
+          .saveFormAnswer(answer, user, html)
+          .then(res => this.openPopup(res))
+          .catch(res => this.openPopup(res))
+          .finally(() => {
+            this.inProcess = false;
+          });
       },
       () => {
-        return !this.isAgree;
+        return !this.isAgree || this.inProcess;
       },
       '',
       1,
@@ -50,8 +63,16 @@ export class ConfirmationPageComponent implements OnInit {
   constructor(
     private qs: QuestionService,
     private scs: SideComponentsServie,
-    private db: DatabaseService
+    private db: DatabaseService,
+    private router: Router
   ) {}
+
+  openPopup(message: string) {
+    this.router.navigate([{ outlets: { popup: ['popup', { message }] } }]);
+    setTimeout(() => {
+      this.router.navigate([{ outlets: { popup: null } }]);
+    }, 1500);
+  }
 
   ngOnInit() {
     this.scs.setButtons(this.buttons);

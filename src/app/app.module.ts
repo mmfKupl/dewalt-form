@@ -36,6 +36,7 @@ import {
 } from '@angular/fire/functions';
 import { environment } from 'src/environments/environment';
 import { StartPageComponent } from './start-page/start-page.component';
+import { PopupComponent } from './popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { StartPageComponent } from './start-page/start-page.component';
     ToolsComponent,
     DepartureComponent,
     ConfirmationPageComponent,
-    StartPageComponent
+    StartPageComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,

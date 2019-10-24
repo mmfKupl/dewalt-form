@@ -20,6 +20,6 @@ export class HeaderComponent implements OnInit {
   }
 
   get currentNavigation() {
-    return this.router.url;
+    return this.router.url.split('(')[0];
   }
 }

@@ -2,6 +2,7 @@
   <app-header></app-header>
 </header>
 <main class="main">
+  <router-outlet name="popup"></router-outlet>
   <section class="main__router-outlet-wrapper">
     <router-outlet></router-outlet>
   </section>
@@ -24,6 +25,7 @@
     *ngFor="let button of buttons; let i = index"
     (click)="button.onClick()"
     [class.disabled]="getDisabled(i)"
+    [disabled]="getDisabled(i)"
     [routerLink]="button.link ? button.link : null"
   >
     {{ button.title }}

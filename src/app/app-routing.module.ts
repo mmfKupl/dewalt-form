@@ -6,6 +6,7 @@ import { ToolsComponent } from './tools/tools.component';
 import { DepartureComponent } from './departure/departure.component';
 import { ConfirmationPageComponent } from './confirmation-page/confirmation-page.component';
 import { StartPageComponent } from './start-page/start-page.component';
+import { PopupComponent } from './popup/popup.component';
 
 const routes: Routes = [
   { path: '', component: StartPageComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'address', component: AddressComponent },
   { path: 'tools', component: ToolsComponent },
   { path: 'departure', component: DepartureComponent },
-  { path: 'confirmation', component: ConfirmationPageComponent }
+  { path: 'confirmation', component: ConfirmationPageComponent },
+  { path: 'popup', component: PopupComponent, outlet: 'popup' }
 ];
 
 @NgModule({

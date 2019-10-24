@@ -2,6 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireFunctions } from '@angular/fire/functions';
+import { retryWhen } from 'rxjs/operators';
 
 class Item {
   value: string | number | File;
@@ -53,41 +54,38 @@ export class DatabaseService {
     return url;
   }
 
-  async saveFormAnswer(answer: Answer, user: string, html: string) {
-    try {
-      const sendTime = Date.now();
-      for (const tool of answer.tools) {
-        const fileElem = tool.find(el => el.isFile);
-        if (fileElem && fileElem.value) {
-          const path = await this.uploadFile(fileElem.value, user);
-          const url = await this.getFileUrlByPath(path);
-          fileElem.value = { path, url };
+  saveFormAnswer(answer: Answer, user: string, html: string) {
+    return new Promise<string>(async (res, rej) => {
+      try {
+        const sendTime = Date.now();
+        for (const tool of answer.tools) {
+          const fileElem = tool.find(el => el.isFile);
+          if (fileElem && fileElem.value) {
+            const path = await this.uploadFile(fileElem.value, user);
+            const url = await this.getFileUrlByPath(path);
+            fileElem.value = { path, url };
+          }
         }
+        answer = this.toObj(answer);
+        this.functions
+          .httpsCallable('sendMail')({
+            user,
+            answer,
+            answerHtml: html,
+            sendTime
+          })
+          .subscribe(
+            _ => {
+              res('Заявка успешно отправлена');
+            },
+            err => {
+              rej(`Произошла ошибка при отправке сообщения: ${err.message}`);
+            }
+          );
+      } catch (err) {
+        rej(err.message);
       }
-      answer = this.toObj(answer);
-      this.functions
-        .httpsCallable('sendMail')({
-          user,
-          answer,
-          answerHtml: html,
-          sendTime
-        })
-        .subscribe(res => {
-          console.log(res);
-          alert('ok');
-        });
-      answer.tools = answer.tools.map((el: Item[]) => ({
-        tool: el
-      }));
-      await this.formAnswerCollection.add({
-        user,
-        answer: this.toObj(answer),
-        sendTime
-      });
-    } catch (err) {
-      console.error(err);
-      alert(err.message);
-    }
+    });
   }
 
   toObj(obj) {
