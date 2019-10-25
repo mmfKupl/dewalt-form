@@ -69,9 +69,6 @@ export class ConfirmationPageComponent implements OnInit {
 
   openPopup(message: string) {
     this.router.navigate([{ outlets: { popup: ['popup', { message }] } }]);
-    setTimeout(() => {
-      this.router.navigate([{ outlets: { popup: null } }]);
-    }, 1500);
   }
 
   ngOnInit() {
