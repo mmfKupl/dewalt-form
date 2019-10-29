@@ -111,7 +111,8 @@ const donloadingAddressQuestions: QuestionBase<any>[] = [
             type: 'time',
             required: true,
             order: 7,
-            key: 'da-downloading-time-from'
+            key: 'da-downloading-time-from',
+            value: '09:00'
           }),
 
           new TextboxQuestion({
@@ -120,7 +121,8 @@ const donloadingAddressQuestions: QuestionBase<any>[] = [
             type: 'time',
             required: true,
             order: 8,
-            key: 'da-downloading-time-to'
+            key: 'da-downloading-time-to',
+            value: '18:00'
           })
         ]
       }),
@@ -133,7 +135,8 @@ const donloadingAddressQuestions: QuestionBase<any>[] = [
             specLable: 'Время обеда: С',
             type: 'time',
             order: 9,
-            key: 'da-dinner-time-from'
+            key: 'da-dinner-time-from',
+            value: '13:00'
           }),
 
           new TextboxQuestion({
@@ -141,7 +144,8 @@ const donloadingAddressQuestions: QuestionBase<any>[] = [
             specLable: 'Время обеда: ДО',
             type: 'time',
             order: 10,
-            key: 'da-dinner-time-to'
+            key: 'da-dinner-time-to',
+            value: '14:00'
           })
         ]
       })
