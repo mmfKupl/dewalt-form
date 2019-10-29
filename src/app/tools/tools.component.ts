@@ -90,7 +90,6 @@ export class ToolsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    console.log('init');
     this.scs.setShowTools(true);
     this.scs.setButtons(this.buttons);
     this.scs.setToolClickHandler((i: number) => {
@@ -122,7 +121,6 @@ export class ToolsComponent implements OnInit, OnDestroy {
 
   addNewTool(answer = {}) {
     const newForm = this.qcs.toFormGroup(this.questions);
-    console.log(answer);
     newForm.patchValue(answer);
     for (const key in answer) {
       if (answer[key] && Array.isArray(answer[key])) {

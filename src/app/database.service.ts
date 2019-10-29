@@ -39,7 +39,6 @@ export class DatabaseService {
     const path = `${user}/${file.name}`;
     const ref = this.st.ref(path);
     const res = await ref.put(file);
-    console.log(path, ref, res);
     return path;
   }
 
