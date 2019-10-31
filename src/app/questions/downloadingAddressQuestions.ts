@@ -38,6 +38,7 @@ const donloadingAddressQuestions: QuestionBase<any>[] = [
     label: 'Населенный пункт РБ (Вид, название, район, область)',
     type: 'text',
     required: true,
+    placeholder: 'Минская область, Дзержинский район, г. Фаниполь',
     order: 1,
     key: 'city'
   }),

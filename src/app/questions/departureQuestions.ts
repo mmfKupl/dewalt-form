@@ -24,7 +24,7 @@ const departureQuestions: QuestionBase<any>[] = [
     key: 'd-weight-total',
     step: 0.01,
     min: 0,
-    plaseholder: '0.00'
+    placeholder: '0.00'
   }),
 
   // new TextboxQuestion({

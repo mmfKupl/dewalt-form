@@ -16,7 +16,7 @@ export class QuestionBase<T> {
   items?: QuestionBase<any>[];
   step?: number;
   min?: number;
-  plaseholder?: string;
+  placeholder?: string;
   max?: number;
   specLable?: string;
 
@@ -36,7 +36,7 @@ export class QuestionBase<T> {
     this.items = options.items;
     this.step = options.step;
     this.min = options.min;
-    this.plaseholder = options.plaseholder;
+    this.placeholder = options.placeholder;
     this.max = options.max;
     this.specLable = options.specLable;
   }

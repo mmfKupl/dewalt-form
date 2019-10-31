@@ -55,6 +55,7 @@ const senderQuestions: QuestionBase<any>[] = [
     label: 'Контактный номер телефона',
     type: 'tel',
     required: true,
+    placeholder: '+375 12 345-67-89',
     order: 6,
     key: 'tel-sender'
   }),

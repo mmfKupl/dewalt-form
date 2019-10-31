@@ -18,7 +18,7 @@ export class Options<T> {
   items?: QuestionBase<any>[];
   step?: number;
   min?: number;
-  plaseholder?: string;
+  placeholder?: string;
   max?: number;
   specLable?: string;
 }

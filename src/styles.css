@@ -280,7 +280,6 @@ body {
   left: 50%;
   transform: translate(-50%, 0);
   position: absolute;
-  width: fit-content;
 }
 
 .header__nav-h3 {
@@ -470,6 +469,12 @@ ng-scrollbar .main__form.main__form-no-margin-bottom {
   background-color: rgba(133, 133, 133, 0.171);
 }
 
+@media only screen and (max-width: 1200px) {
+  html {
+    font-size: 13px;
+  }
+}
+
 @media only screen and (max-width: 1050px) {
   .header,
   .main__router-outlet-wrapper,
@@ -479,6 +484,12 @@ ng-scrollbar .main__form.main__form-no-margin-bottom {
 
   .main__router-outlet-wrapper {
     margin: 1rem;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  html {
+    font-size: 12px;
   }
 }
 
