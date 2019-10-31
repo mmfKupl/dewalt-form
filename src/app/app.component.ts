@@ -33,7 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
     this.buttonsSubscriptin = this.scs.buttons$.subscribe(arr => {
       setTimeout(() => {
-        this.buttons = arr.sort((a, b) => b.order - a.order);
+        this.buttons = arr.sort((a, b) => a.order - b.order);
       });
     });
     this.toolsSubscriptin = this.scs.tools$.subscribe(arr => {

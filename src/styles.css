@@ -69,10 +69,9 @@ body {
   color: #000;
   background-color: #fff;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   z-index: 100;
   flex-wrap: wrap;
-  flex-direction: row-reverse;
 }
 
 .body__nav,
@@ -185,13 +184,13 @@ body {
 }
 
 .body__nav-button {
-  margin-right: 3rem;
+  margin-left: 3rem;
   margin-bottom: 1rem;
   background-color: #fff;
 }
 
 .body__nav-button:first-child {
-  margin-right: 0;
+  margin-left: 0;
 }
 
 .input,
@@ -469,13 +468,16 @@ ng-scrollbar .main__form.main__form-no-margin-bottom {
   background-color: rgba(133, 133, 133, 0.171);
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1400px) {
   html {
     font-size: 13px;
   }
 }
 
 @media only screen and (max-width: 1050px) {
+  html {
+    font-size: 12px;
+  }
   .header,
   .main__router-outlet-wrapper,
   .footer {
@@ -484,12 +486,6 @@ ng-scrollbar .main__form.main__form-no-margin-bottom {
 
   .main__router-outlet-wrapper {
     margin: 1rem;
-  }
-}
-
-@media only screen and (max-width: 900px) {
-  html {
-    font-size: 12px;
   }
 }
 

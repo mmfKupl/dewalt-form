@@ -48,6 +48,7 @@ const toolQuestions: QuestionBase<any>[] = [
         type: 'text',
         required: true,
         order: 1,
+        placeholder: 'DCN692P2',
         key: 'tool-vendor-code'
       }),
 
@@ -55,6 +56,7 @@ const toolQuestions: QuestionBase<any>[] = [
         label: 'Тип инструмента (код изделия)',
         type: 'text',
         required: true,
+        placeholder: 'TYP 2',
         order: 2,
         key: 'tool-type'
       }),
@@ -63,6 +65,7 @@ const toolQuestions: QuestionBase<any>[] = [
         label: 'Заводской номер (серийный номер)',
         type: 'text',
         required: true,
+        placeholder: '028205',
         order: 3,
         key: 'tool-serial-number'
       })
@@ -81,6 +84,7 @@ const toolQuestions: QuestionBase<any>[] = [
     label: 'Описание неисправности',
     required: true,
     order: 5,
+    placeholder: 'искрит, нет удара',
     key: 'tool-description'
   }),
 
