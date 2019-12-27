@@ -1,4 +1,12 @@
 <section class="confirmation__wrapper">
+  <mat-checkbox
+    class="question__answer question__input question__input-checkbox question__label"
+    type="checkbox"
+    [required]="true"
+    labelPosition="before"
+    [(ngModel)]="isAgree"
+    >Даю согласие на обработку и хранение моих персональных данных</mat-checkbox
+  >
   <table class="table" #resultTable>
     <tr class="table__tr table__label">
       <td class="table__td" colspan="2">
@@ -89,13 +97,4 @@
       </td>
     </tr>
   </table>
-
-  <mat-checkbox
-    class="question__answer question__input question__input-checkbox question__label"
-    type="checkbox"
-    [required]="true"
-    labelPosition="before"
-    [(ngModel)]="isAgree"
-    >Даю согласие на обработку и хранение моих персональных данных</mat-checkbox
-  >
 </section>
