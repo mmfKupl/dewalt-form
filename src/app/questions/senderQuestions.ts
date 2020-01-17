@@ -39,7 +39,7 @@ const senderQuestions: QuestionBase<any>[] = [
     orderTo: 'Юр. лицо',
     hiddenIfNotRequired: true,
     order: 4,
-    key: 'sender-upn',
+    key: 'sender-unp',
     fixedLength: 9
   }),
 

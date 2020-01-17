@@ -102,7 +102,7 @@ export class ConfirmationPageComponent implements OnInit {
               p[item.key] = item;
               continue;
             } else if (isMoment(ik)) {
-              value = (ik as Moment).format('LL');
+              value = (ik as Moment).format('DD.MM.YYYY');
             } else if (item instanceof FileQuestion) {
             } else if (typeof value !== 'boolean' && !value) {
               value = typeof ik === 'object' ? ik.value : ik;
@@ -125,7 +125,7 @@ export class ConfirmationPageComponent implements OnInit {
           const ak = answer[c.key] || {};
           let value;
           if (isMoment(ak)) {
-            value = (ak as Moment).format('LL');
+            value = (ak as Moment).format('DD.MM.YYYY');
           } else if (Array.isArray(ak)) {
             value = ak.join(', ');
           } else if (typeof value !== 'boolean') {
